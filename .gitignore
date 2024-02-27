@@ -1,3 +1,5 @@
 .env
-.log
-.out
+*.log
+*.out
+venv
+.idea/
