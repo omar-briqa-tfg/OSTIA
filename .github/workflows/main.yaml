@@ -25,4 +25,4 @@ jobs:
       - name: Create pipenv environment
         run: pipenv install --dev
       - name: Run pre-commit
-        run: pipenv run pre-commit run --to-ref HEAD --from-ref origin/master
+        run: pipenv run pre-commit run
