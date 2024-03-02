@@ -9,7 +9,7 @@ Lines = fd.readlines()
 
 for line in Lines:
 
-    identification = re.compile(r'(^\d.*])').findall(line)[0]
+    identification = re.compile(r'(^\d.*]) \"').findall(line)[0]
     body = re.compile(r'(\".*)').findall(line)[0]
 
     ip = re.match(r'([0-9]+\.){3}[0-9]+', identification).group()
