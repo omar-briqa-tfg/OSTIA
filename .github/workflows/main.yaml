@@ -1,8 +1,6 @@
 name: CI
 on:
   pull_request:
-    branches:
-      - master
   push:
     branches:
       - master
@@ -27,4 +25,4 @@ jobs:
       - name: Create pipenv environment
         run: pipenv install --dev
       - name: Run pre-commit
-        run: pipenv run pre-commit run
+        run: pipenv run pre-commit run --to-ref HEAD --from-ref origin/master
