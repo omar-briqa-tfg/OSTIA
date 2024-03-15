@@ -1,4 +1,4 @@
-# UPCommons DSpace Logs Analysis
+# Open Science Toolkit Information Access
 
 ## Introduction
 
