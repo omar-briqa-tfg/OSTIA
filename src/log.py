@@ -1,0 +1,2 @@
+class Log(str):
+    pass
