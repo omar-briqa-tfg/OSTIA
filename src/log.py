@@ -1,2 +1,4 @@
 class Log(str):
-    pass
+
+    def __init__(self, value: str) -> None:
+        pass

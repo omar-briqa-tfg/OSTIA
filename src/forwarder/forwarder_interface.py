@@ -4,7 +4,7 @@ from typing import List
 
 from abc import ABC, abstractmethod
 
-class IFilter(ABC):
+class IForwarder(ABC):
 
     #TODO: replace int by Response class
 
