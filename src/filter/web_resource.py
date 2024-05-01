@@ -7,5 +7,5 @@ import re
 class WebResource(IFilter):
 
     @classmethod
-    def filter(cls, log: str) -> bool:
-        return bool(re.search(WEB_EXTENSIONS, log))
+    def filter(cls, resource: str) -> bool:
+        return bool(re.search(WEB_EXTENSIONS, resource))

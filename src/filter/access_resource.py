@@ -7,5 +7,5 @@ import re
 class AccessResource(IFilter):
 
     @classmethod
-    def filter(cls, log: str) -> bool:
-        return bool(re.search(HANDLE, log)) or bool(re.search(BITSTREAM, log))
+    def filter(cls, resource: str) -> bool:
+        return bool(re.search(HANDLE, resource)) or bool(re.search(BITSTREAM, resource))
