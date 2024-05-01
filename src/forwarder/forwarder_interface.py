@@ -11,7 +11,3 @@ class IForwarder(ABC):
     @abstractmethod
     def forward(self, log: Log) -> int:
         pass
-
-    @abstractmethod
-    def forwardMany(self, logs: List[Log]) -> int:
-        pass

@@ -9,7 +9,3 @@ class IFilter(ABC):
     @abstractmethod
     def filter(self, log: Log) -> bool:
         pass
-
-    @abstractmethod
-    def get_parameters(self) -> Dict[str, Any]:
-        pass
