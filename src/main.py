@@ -10,14 +10,35 @@ from src.transformer.to_json                import ToJSON
 from src.transformer.add_label              import AddLabel
 from src.transformer.add_resource_id_label  import AddResourceIdLabel
 
-# _ = WithoutIpAddress.filter(log)
-# _ = WithIPv6Address.filter(log)
-# _ = AccessResource.filter(log)
-# _ = SearchResource.filter(log)
-# _ = WebResource.filter(log)
+def process_logs(line: str):
 
-# _ = AddDefaultIpAddress.transform(log)
-# _ = RemoveIPv6Address.transform(log)
-# _ = ToJSON.transform(log)
-# _ = AddLabel.transform(a, 'label', 'value')
-# _ = AddResourceIdLabel.transform({}, '')
+    log = {}
+
+    if WithoutIpAddress.filter(line):
+        line = AddDefaultIpAddress.transform(line)
+
+    elif WithIPv6Address.filter(line):
+        line = RemoveIPv6Address.transform(line)
+
+    try:
+        log, status = ToJSON.transform(line)
+        resource = log['request']['resource']
+
+    except:
+        # TODO: create log with value and content=error
+        return
+
+    AddLabel.transform(log, 'content', 'ok' if status == 0 else 'diferent')
+
+    if AccessResource.filter(resource):
+        AddResourceIdLabel.transform(log, resource)
+        AddLabel.transform(log, 'type', 'recurs')
+
+    elif SearchResource.filter(resource):
+        AddLabel.transform(log, 'type', 'cerca')
+
+    elif WebResource.filter(resource):
+        return
+
+    else:
+        AddLabel.transform(log, 'type', 'altres')
