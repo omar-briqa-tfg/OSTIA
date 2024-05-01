@@ -1,11 +1,11 @@
 from src.filter.filter_interface import IFilter
 
+from src.utils.regex_patterns import WEB_EXTENSIONS
+
 import re
 
 class WebResource(IFilter):
 
-    WEB_EXTENSIONS = r'.*\.(js|woff|jpg|css|png(.*)?|ico|txt|gif)$'
-
     @classmethod
     def filter(cls, log: str) -> bool:
-        return bool(re.search(cls.WEB_EXTENSIONS, log))
+        return bool(re.search(WEB_EXTENSIONS, log))
