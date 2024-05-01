@@ -7,5 +7,5 @@ class WithIPv6Address(IFilter):
     IPV6_PATTERN = r"^([a-fA-F0-9:]+|[uU]nknown), "
 
     @classmethod
-    def filter(self, log: str) -> bool:
-        return bool(re.search(self.IPV6_PATTERN, log))
+    def filter(cls, log: str) -> bool:
+        return bool(re.search(cls.IPV6_PATTERN, log))

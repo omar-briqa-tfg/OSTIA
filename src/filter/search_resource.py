@@ -6,5 +6,5 @@ class SearchResource(IFilter):
     SEARCH_KEYS = ['discover', 'search', 'browse', 'open-search']
 
     @classmethod
-    def filter(self, log: str) -> bool:
-        return any(key in log for key in self.SEARCH_KEYS)
+    def filter(cls, log: str) -> bool:
+        return any(key in log for key in cls.SEARCH_KEYS)

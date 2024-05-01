@@ -5,5 +5,5 @@ class IForwarder(ABC):
     #TODO: replace int by Response class
 
     @abstractmethod
-    def forward(self, log: str) -> int:
+    def forward(cls, log: str) -> int:
         pass
