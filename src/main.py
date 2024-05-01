@@ -7,6 +7,7 @@ from src.filter.web_resource        import WebResource
 from src.transformer.add_default_ipaddress  import AddDefaultIpAddress
 from src.transformer.remove_ipv6address     import RemoveIPv6Address
 from src.transformer.to_json                import ToJSON
+from src.transformer.add_label              import AddLabel
 
 # _ = WithoutIpAddress.filter(log)
 # _ = WithIPv6Address.filter(log)
@@ -17,3 +18,4 @@ from src.transformer.to_json                import ToJSON
 # _ = AddDefaultIpAddress.transform(log)
 # _ = RemoveIPv6Address.transform(log)
 # _ = ToJSON.transform(log)
+# _ = AddLabel.transform(a, 'label', 'value')
