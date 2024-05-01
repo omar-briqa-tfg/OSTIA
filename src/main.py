@@ -6,8 +6,7 @@ from src.filter.web_resource        import WebResource
 
 from src.transformer.add_default_ipaddress  import AddDefaultIpAddress
 from src.transformer.remove_ipv6address     import RemoveIPv6Address
-
-log = "- - - [31/Mar/2023:00:00:01 +0200]"
+from src.transformer.to_json                import ToJSON
 
 # _ = WithoutIpAddress.filter(log)
 # _ = WithIPv6Address.filter(log)
@@ -17,3 +16,4 @@ log = "- - - [31/Mar/2023:00:00:01 +0200]"
 
 # _ = AddDefaultIpAddress.transform(log)
 # _ = RemoveIPv6Address.transform(log)
+# _ = ToJSON.transform(log)
