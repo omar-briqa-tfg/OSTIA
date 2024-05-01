@@ -6,7 +6,7 @@ from typing import Union
 class ToJSON(ITransformer):
 
     @classmethod
-    def transform(cls, log: str) -> Union[dict[str, str], int]:
+    def transform(cls, log: str) -> Union[dict[str, any], int]:
 
         status = 0
 
