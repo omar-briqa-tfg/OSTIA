@@ -1,11 +1,7 @@
-from src.log import Log
-
-from typing import Dict, Any
-
 from abc import ABC, abstractmethod
 
 class IFilter(ABC):
 
     @abstractmethod
-    def filter(self, log: Log) -> bool:
+    def filter(cls, log: str) -> bool:
         pass
