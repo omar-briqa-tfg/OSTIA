@@ -1,7 +1,5 @@
 from src.log import Log
 
-from typing import Dict, Any
-
 from abc import ABC, abstractmethod
 
 class IFilter(ABC):

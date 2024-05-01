@@ -1,7 +1,5 @@
 from src.log import Log
 
-from typing import List
-
 from abc import ABC, abstractmethod
 
 class IForwarder(ABC):
