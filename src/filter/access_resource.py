@@ -8,4 +8,4 @@ class AccessResource(IFilter):
 
     @classmethod
     def filter(cls, log: str) -> bool:
-        return bool(re.search(HANDLE, log)) and bool(re.search(BITSTREAM, log))
+        return bool(re.search(HANDLE, log)) or bool(re.search(BITSTREAM, log))
