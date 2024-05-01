@@ -10,7 +10,9 @@ from src.transformer.to_json                import ToJSON
 from src.transformer.add_label              import AddLabel
 from src.transformer.add_resource_id_label  import AddResourceIdLabel
 
-def process_logs(line: str):
+from src.forwarder.loki_forwarder   import LokiForwarder
+
+def process_log(line: str):
 
     log = {}
 
@@ -25,8 +27,8 @@ def process_logs(line: str):
         resource = log['request']['resource']
 
     except:
-        # TODO: create log with value and content=error
-        return
+        log = {'value': line, 'content': 'error'}
+        LokiForwarder.forward(log)
 
     AddLabel.transform(log, 'content', 'ok' if status == 0 else 'diferent')
 
@@ -42,3 +44,5 @@ def process_logs(line: str):
 
     else:
         AddLabel.transform(log, 'type', 'altres')
+
+    LokiForwarder.forward(log)
