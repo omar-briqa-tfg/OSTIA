@@ -1,10 +1,9 @@
 from src.filter.filter_interface import IFilter
 
-class SearchResource(IFilter):
+from src.utils.regex_patterns import SEARCH_KEYS
 
-    #TODO: complete list
-    SEARCH_KEYS = ['discover', 'search', 'browse', 'open-search']
+class SearchResource(IFilter):
 
     @classmethod
     def filter(cls, resource: str) -> bool:
-        return any(key in resource for key in cls.SEARCH_KEYS)
+        return any(key in resource for key in SEARCH_KEYS)

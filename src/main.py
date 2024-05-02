@@ -36,11 +36,11 @@ def process_log(line: str):
         AddResourceIdLabel.transform(log, resource)
         AddLabel.transform(log, 'type', 'recurs')
 
-    elif SearchResource.filter(resource):
-        AddLabel.transform(log, 'type', 'cerca')
-
     elif WebResource.filter(resource):
         return
+
+    elif SearchResource.filter(resource):
+        AddLabel.transform(log, 'type', 'cerca')
 
     else:
         AddLabel.transform(log, 'type', 'altres')
