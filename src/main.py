@@ -10,7 +10,8 @@ from src.transformer.to_json                import ToJSON
 from src.transformer.add_label              import AddLabel
 from src.transformer.add_resource_id_label  import AddResourceIdLabel
 
-from src.forwarder.loki_forwarder   import LokiForwarder
+from src.forwarder.influxdb_forwarder   import InfluxDbForwarder
+
 
 def process_log(line: str):
 
@@ -27,8 +28,11 @@ def process_log(line: str):
         resource = log['request']['resource']
 
     except:
-        log = {'value': line, 'content': 'error'}
-        LokiForwarder.forward(log)
+        InfluxDbForwarder.forward({
+            'value': line,
+            'content': 'error'
+        }, line)
+        return
 
     AddLabel.transform(log, 'content', 'ok' if status == 0 else 'diferent')
 
@@ -45,4 +49,5 @@ def process_log(line: str):
     else:
         AddLabel.transform(log, 'type', 'altres')
 
-    LokiForwarder.forward(log)
+    InfluxDbForwarder.forward(log, line)
+
