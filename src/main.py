@@ -28,11 +28,10 @@ def process_log(line: str):
         resource = log['request']['resource']
 
     except:
-        InfluxDbForwarder.forward({
+        return InfluxDbForwarder.forward({
             'value': line,
             'content': 'error'
         }, line)
-        return
 
     AddLabel.transform(log, 'content', 'ok' if status == 0 else 'diferent')
 
@@ -49,5 +48,4 @@ def process_log(line: str):
     else:
         AddLabel.transform(log, 'type', 'altres')
 
-    InfluxDbForwarder.forward(log, line)
-
+    return InfluxDbForwarder.forward(log, line)
