@@ -4,6 +4,7 @@ from src.utils.regex_patterns import BITSTREAM, HANDLE
 
 import re
 
+
 class AddResourceIdLabel(ITransformer):
 
     @classmethod

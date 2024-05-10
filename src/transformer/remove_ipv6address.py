@@ -4,6 +4,7 @@ from src.utils.regex_patterns import IPV6_PATTERN
 
 import re
 
+
 class RemoveIPv6Address(ITransformer):
 
     @classmethod

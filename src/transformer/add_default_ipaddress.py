@@ -1,5 +1,6 @@
 from src.transformer.transformer_interface import ITransformer
 
+
 class AddDefaultIpAddress(ITransformer):
 
     WITHOUT_IPADDRESS = '-'
