@@ -5,8 +5,11 @@ USAGE="
       - Options
         -> ./unzip.sh -h, --help
         -> ./unzip.sh -y, --year <year> -i, --input-path <INPUT_PATH> -o, --output-path <OUTPUT_PATH>
+            -> year: yyyy
         -> ./unzip.sh -ym, --year-month <year>-<month> -i, --input-path <INPUT_PATH> -o, --output-path <OUTPUT_PATH>
+            -> year-month: yyyy-mm
 "
+
 HELP="
     unzip.sh
 
@@ -27,28 +30,54 @@ HELP="
           -> ./unzip.sh -y, --year <year> -i, --input-path <INPUT_PATH> -o, --output-path <OUTPUT_PATH>
               Unzip files for a specific year
 
-          -> ./unzip.sh -y, --year-month <year>-<month> -i, --input-path <INPUT_PATH> -o, --output-path <OUTPUT_PATH>
+          -> ./unzip.sh -ym, --year-month <year>-<month> -i, --input-path <INPUT_PATH> -o, --output-path <OUTPUT_PATH>
               Unzip files for a specific year
 
     DEPENDENCIES
       - No external dependencies are needed
 "
 
-echo "$HELP"
+YEAR=""
+MONTH=""
+INPUT_PATH=""
+OUTPUT_PATH=""
 
-exit 0
+if [[ $# -eq 1 ]]; then
+    if [[ $1 == "-h" || $1 == "--help" ]]; then
+        echo "$HELP"
+    else
+        echo "$USAGE"
+    fi
+    exit 0
+fi
 
-INPUT_PATH=/mnt/working/logsanon
-OUTPUT_PATH=/mnt/working/github/OSTIA/res
-
-mode=$1
-date=$2
-
-
-
-elif [[ $mode != "year-month" && $mode != "year" ]]; then
-    echo "Invalid mode. Please choose either 'year-month' or 'year'."
+if [[ $# -ne 6 ]]; then
+    echo "$USAGE"
     exit 1
+else
+    if [[ $1 == "-y" || $1 == "--year" ]]; then
+        YEAR=$2
+    elif [[ $1 == "-ym" || $1 == "--year-month" ]]; then
+        YEAR=$(echo "$2" | cut -d'-' -f1)
+        MONTH=$(echo "$2" | cut -d'-' -f2)
+    else
+        echo "$USAGE"
+        exit 1
+    fi
+
+    if [[ $3 == "-i" || $3 == "--input-path" ]]; then
+        INPUT_PATH=$4
+    else
+        echo "$USAGE"
+        exit 1
+    fi
+
+    if [[ $5 == "-o" || $5 == "--output-path" ]]; then
+        OUTPUT_PATH=$6
+    else
+        echo "$USAGE"
+        exit 1
+    fi
 fi
 
 exit 0
