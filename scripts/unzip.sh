@@ -1,5 +1,8 @@
 #!/bin/bash
 
+VERSION=1.2.0
+LAST_DATE=2024-05-10
+
 USAGE="
     USAGE:
       - Options
@@ -37,6 +40,9 @@ HELP="
       - No external dependencies are needed
 "
 
+# ----------------------------------------------------------------------------- #
+
+MODE=""
 YEAR=""
 MONTH=""
 INPUT_PATH=""
@@ -57,9 +63,11 @@ if [[ $# -ne 6 ]]; then
 else
     if [[ $1 == "-y" || $1 == "--year" ]]; then
         YEAR=$2
+        MODE="year"
     elif [[ $1 == "-ym" || $1 == "--year-month" ]]; then
         YEAR=$(echo "$2" | cut -d'-' -f1)
         MONTH=$(echo "$2" | cut -d'-' -f2)
+        MODE="year-month"
     else
         echo "$USAGE"
         exit 1
@@ -80,47 +88,40 @@ else
     fi
 fi
 
-exit 0
-
-# -----------------------------------------------------------------------------
-
-if [[ $mode == "year-month" ]]; then
-    logs=$(ls $INPUT_PATH | grep $input_date)
-    year=$(echo $input_date | cut -d'-' -f1)
-    month=$(echo $input_date | cut -d'-' -f2)
-    mkdir -p $OUTPUT_PATH/$year/$month
-
-elif [[ $mode == "year" ]]; then
-    logs=$(ls $INPUT_PATH | grep "^$year-")
-    for month in {01..12}; do
-        mkdir -p $OUTPUT_PATH/$year/$month
-    done
-
-fi
-
-# -----------------------------------------------------------------------------
+# ----------------------------------------------------------------------------- #
 
 process_logs() {
     local logs="$1"
     local output_dir="$2"
 
     while IFS= read -r line; do
-        date=$(echo $line | cut -d. -f2)
-        echo "unzip $line ..."
+        date=$(echo "$line" | cut -d. -f2)
+        echo "unzip "$line" ..."
         gunzip -c $INPUT_PATH/$line > $output_dir/$date.log
     done <<< "$logs"
 }
 
-# -----------------------------------------------------------------------------
+create_directory() {
+    if [[ ! -d "$OUTPUT_PATH/$YEAR/$MONTH" ]]; then
+        mkdir -p $OUTPUT_PATH/$YEAR/$MONTH
+    else
+        echo "ERROR | "$OUTPUT_PATH/$YEAR/$MONTH" already exists"
+        exit 1
+    fi
+}
 
-if [[ $mode == "year-month" ]]; then
-    process_logs "$logs" "$OUTPUT_PATH/$year/$month"
+# ----------------------------------------------------------------------------- #
 
-elif [[ $mode == "year" ]]; then
+if [[ $MODE == "year-month" ]]; then
+    logs=$(ls "$INPUT_PATH" | grep $YEAR-$MONTH)
+    create_directory
+    process_logs "$logs" "$OUTPUT_PATH/$YEAR/$MONTH"
+
+elif [[ $MODE == "year" ]]; then
+    logs=$(ls "$INPUT_PATH" | grep "$year-")
     for month in {01..12}; do
-        logs=$(ls $INPUT_PATH | grep "$year-$month")
-        process_logs "$logs" "$OUTPUT_PATH/$year/$month"
+        create_directory
+        logs=$(ls $INPUT_PATH | grep "$YEAR-$MONTH")
+        process_logs "$logs" "$OUTPUT_PATH/$YEAR/$MONTH"
     done
 fi
-
-#TODO: check if folder / logs already exists
