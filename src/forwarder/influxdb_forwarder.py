@@ -50,7 +50,7 @@ class InfluxDbForwarder(IForwarder):
         if log['type'] == "recurs":
             return {
                 'log': raw_log,
-                'recurs': log['resource']
+                'recurs': str(log['resource'])
             }
         else:
             return {'log': raw_log}
