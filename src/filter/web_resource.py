@@ -4,6 +4,7 @@ from src.utils.regex_patterns import WEB_EXTENSIONS
 
 import re
 
+
 class WebResource(IFilter):
 
     @classmethod

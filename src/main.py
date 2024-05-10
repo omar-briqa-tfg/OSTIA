@@ -31,6 +31,7 @@ def process_log(line: str):
         log, status = ToJSON.transform(line)
         resource = log['request']['resource']
 
+    # TODO: add specific exception
     except:
         log = {
             LABEL_VALUE: line,

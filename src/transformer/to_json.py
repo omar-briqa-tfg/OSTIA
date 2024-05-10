@@ -1,12 +1,13 @@
 from src.transformer.transformer_interface import ITransformer
 
 import re
-from typing import Union
+from typing import Union, Tuple, Dict, Any
+
 
 class ToJSON(ITransformer):
 
     @classmethod
-    def transform(cls, log: str) -> Union[dict[str, any], int]:
+    def transform(cls, log: str) -> tuple[dict[str, str | dict[str, str | Any]], int]:
 
         status = 0
 
@@ -41,7 +42,7 @@ class ToJSON(ITransformer):
         http_request_status_code = re.compile(r' (\d+) (-|\d+) ').findall(body)[0][0]
         http_request_response_size = re.compile(r' (\d+) (-|\d+) ').findall(body)[0][1]
 
-        logJSON = {
+        log_json = {
             'ip_address': ip,
             'date': date,
             'time': time,
@@ -56,4 +57,4 @@ class ToJSON(ITransformer):
             'user_agent': http_user_agent
         }
 
-        return logJSON, status
+        return log_json, status

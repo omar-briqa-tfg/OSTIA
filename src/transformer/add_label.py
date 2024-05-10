@@ -1,5 +1,6 @@
 from src.transformer.transformer_interface import ITransformer
 
+
 class AddLabel(ITransformer):
 
     @classmethod
