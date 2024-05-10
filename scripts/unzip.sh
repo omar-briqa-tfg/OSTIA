@@ -102,10 +102,13 @@ process_logs() {
 }
 
 create_directory() {
-    if [[ ! -d "$OUTPUT_PATH/$YEAR/$MONTH" ]]; then
-        mkdir -p $OUTPUT_PATH/$YEAR/$MONTH
+    local year="$1"
+    local month="$2"
+
+    if [[ ! -d "$OUTPUT_PATH/$year/$month" ]]; then
+        mkdir -p $OUTPUT_PATH/$year/$month
     else
-        echo "ERROR | "$OUTPUT_PATH/$YEAR/$MONTH" already exists"
+        echo "ERROR | "$OUTPUT_PATH/$year/$month" already exists"
         exit 1
     fi
 }
@@ -114,14 +117,17 @@ create_directory() {
 
 if [[ $MODE == "year-month" ]]; then
     logs=$(ls "$INPUT_PATH" | grep "$YEAR-$MONTH")
-    create_directory
-    process_logs "$logs" "$OUTPUT_PATH/$YEAR/$MONTH"
+    if [[ -n "$logs" ]]; then
+        create_directory "$YEAR" "$month"
+        process_logs "$logs" "$OUTPUT_PATH/$YEAR/$month"
+    fi
 
 elif [[ $MODE == "year" ]]; then
-    logs=$(ls "$INPUT_PATH" | grep "$YEAR-")
     for month in {01..12}; do
-        create_directory
         logs=$(ls $INPUT_PATH | grep "$YEAR-$month")
-        process_logs "$logs" "$OUTPUT_PATH/$YEAR/$month"
+        if [[ -n "$logs" ]]; then
+            create_directory "$YEAR" "$month"
+            process_logs "$logs" "$OUTPUT_PATH/$YEAR/$month"
+        fi
     done
 fi
