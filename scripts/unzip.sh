@@ -1,17 +1,57 @@
 #!/bin/bash
 
+USAGE="
+    USAGE:
+      - Options
+        -> ./unzip.sh -h, --help
+        -> ./unzip.sh -y, --year <year> -i, --input-path <INPUT_PATH> -o, --output-path <OUTPUT_PATH>
+        -> ./unzip.sh -ym, --year-month <year>-<month> -i, --input-path <INPUT_PATH> -o, --output-path <OUTPUT_PATH>
+"
+HELP="
+    unzip.sh
+
+    DESCRIPTION
+      - This script unzips log files based on specified criteria.
+
+      - The script will scan over INPUT_PATH directory:
+        - The log file names MUST follow this format: *yyyy-mm-dd*
+
+      - The script will unzip on OUTPUT_PATH directory:
+        - OUTPUT_PATH/yyyy/mm/yyyy-mm-dd.log
+
+    USAGE
+      - Options
+          -> ./unzip.sh -h, --help
+              Show this help message
+
+          -> ./unzip.sh -y, --year <year> -i, --input-path <INPUT_PATH> -o, --output-path <OUTPUT_PATH>
+              Unzip files for a specific year
+
+          -> ./unzip.sh -y, --year-month <year>-<month> -i, --input-path <INPUT_PATH> -o, --output-path <OUTPUT_PATH>
+              Unzip files for a specific year
+
+    DEPENDENCIES
+      - No external dependencies are needed
+"
+
+echo "$HELP"
+
+exit 0
+
 INPUT_PATH=/mnt/working/logsanon
 OUTPUT_PATH=/mnt/working/github/OSTIA/res
 
 mode=$1
+date=$2
 
-if [[ $mode == "year-month" ]]; then
-    read -p "Enter the date in the format yyyy-mm: " input_date
-elif [[ $mode == "year" ]]; then
-    read -p "Enter the year in the format yyyy: " year
-else
-    echo "Invalid mode. Please choose either 'year-month' or 'year'." && exit 1
+
+
+elif [[ $mode != "year-month" && $mode != "year" ]]; then
+    echo "Invalid mode. Please choose either 'year-month' or 'year'."
+    exit 1
 fi
+
+exit 0
 
 # -----------------------------------------------------------------------------
 
