@@ -1,13 +1,10 @@
-from src.log import Log
-
-from typing import List
-
 from abc import ABC, abstractmethod
+
 
 class IForwarder(ABC):
 
-    #TODO: replace int by Response class
+    # TODO: replace int by Response class
 
     @abstractmethod
-    def forward(self, log: Log) -> int:
+    def forward(cls, log: dict, raw_log: str) -> int:
         pass
