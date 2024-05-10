@@ -62,7 +62,7 @@ if [[ $# -ne 6 ]]; then
     exit 1
 else
     if [[ $1 == "-y" || $1 == "--year" ]]; then
-        YEAR=$2
+        YEAR="$2"
         MODE="year"
     elif [[ $1 == "-ym" || $1 == "--year-month" ]]; then
         YEAR=$(echo "$2" | cut -d'-' -f1)
@@ -74,14 +74,14 @@ else
     fi
 
     if [[ $3 == "-i" || $3 == "--input-path" ]]; then
-        INPUT_PATH=$4
+        INPUT_PATH="$4"
     else
         echo "$USAGE"
         exit 1
     fi
 
     if [[ $5 == "-o" || $5 == "--output-path" ]]; then
-        OUTPUT_PATH=$6
+        OUTPUT_PATH="$6"
     else
         echo "$USAGE"
         exit 1
@@ -95,7 +95,7 @@ process_logs() {
     local output_dir="$2"
 
     while IFS= read -r line; do
-        date=$(echo "$line" | cut -d. -f2)
+        date=$(echo "$line" | grep -oE '[0-9]{4}-[0-9]{2}-[0-9]{2}')
         echo "unzip "$line" ..."
         gunzip -c $INPUT_PATH/$line > $output_dir/$date.log
     done <<< "$logs"
@@ -113,15 +113,15 @@ create_directory() {
 # ----------------------------------------------------------------------------- #
 
 if [[ $MODE == "year-month" ]]; then
-    logs=$(ls "$INPUT_PATH" | grep $YEAR-$MONTH)
+    logs=$(ls "$INPUT_PATH" | grep "$YEAR-$MONTH")
     create_directory
     process_logs "$logs" "$OUTPUT_PATH/$YEAR/$MONTH"
 
 elif [[ $MODE == "year" ]]; then
-    logs=$(ls "$INPUT_PATH" | grep "$year-")
+    logs=$(ls "$INPUT_PATH" | grep "$YEAR-")
     for month in {01..12}; do
         create_directory
-        logs=$(ls $INPUT_PATH | grep "$YEAR-$MONTH")
-        process_logs "$logs" "$OUTPUT_PATH/$YEAR/$MONTH"
+        logs=$(ls $INPUT_PATH | grep "$YEAR-$month")
+        process_logs "$logs" "$OUTPUT_PATH/$YEAR/$month"
     done
 fi
