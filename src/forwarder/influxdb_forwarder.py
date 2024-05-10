@@ -31,6 +31,7 @@ class InfluxDbForwarder(IForwarder):
         # TODO: do not overwrite logs with the same timestamp
         client_write_api.write(record=data, write_precision='s', org=cls.influxdb_org, bucket=cls.influxdb_bucket)
 
+        # TODO: return correct value
         return 0
 
     @staticmethod

@@ -32,10 +32,11 @@ def process_log(line: str):
         resource = log['request']['resource']
 
     except:
-        return InfluxDbForwarder.forward({
+        log = {
             LABEL_VALUE: line,
             LABEL_CONTENT: LABEL_CONTENT_ERROR
-        }, line)
+        }
+        return InfluxDbForwarder.forward(log, line)
 
     AddLabel.transform(log, LABEL_CONTENT, LABEL_CONTENT_OK if status == 0 else LABEL_CONTENT_DIFFERENT)
 
