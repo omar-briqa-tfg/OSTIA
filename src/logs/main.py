@@ -1,20 +1,20 @@
-from src.filter.web_resource import WebResource
-from src.filter.search_resource import SearchResource
-from src.filter.access_resource import AccessResource
-from src.filter.with_ipv6address import WithIPv6Address
-from src.filter.without_ipaddress import WithoutIpAddress
+from src.logs.filter.web_resource import WebResource
+from src.logs.filter.search_resource import SearchResource
+from src.logs.filter.access_resource import AccessResource
+from src.logs.filter.with_ipv6address import WithIPv6Address
+from src.logs.filter.without_ipaddress import WithoutIpAddress
 
-from src.transformer.to_json import ToJSON
-from src.transformer.add_label import AddLabel
-from src.transformer.remove_ipv6address import RemoveIPv6Address
-from src.transformer.add_resource_id_label import AddResourceIdLabel
-from src.transformer.add_default_ipaddress import AddDefaultIpAddress
+from src.logs.transformer.to_json import ToJSON
+from src.logs.transformer.add_label import AddLabel
+from src.logs.transformer.remove_ipv6address import RemoveIPv6Address
+from src.logs.transformer.add_resource_id_label import AddResourceIdLabel
+from src.logs.transformer.add_default_ipaddress import AddDefaultIpAddress
 
-from src.forwarder.influxdb_forwarder import InfluxDbForwarder
+from src.logs.forwarder.influxdb_forwarder import InfluxDbForwarder
 
-from src.utils.constants import LABEL_VALUE
-from src.utils.constants import LABEL_TYPE, LABEL_TYPE_OTHERS, LABEL_TYPE_SEARCH, LABEL_TYPE_RESOURCE
-from src.utils.constants import LABEL_CONTENT, LABEL_CONTENT_OK, LABEL_CONTENT_ERROR, LABEL_CONTENT_DIFFERENT
+from src.logs.utils.constants import LABEL_VALUE
+from src.logs.utils.constants import LABEL_TYPE, LABEL_TYPE_OTHERS, LABEL_TYPE_SEARCH, LABEL_TYPE_RESOURCE
+from src.logs.utils.constants import LABEL_CONTENT, LABEL_CONTENT_OK, LABEL_CONTENT_ERROR, LABEL_CONTENT_DIFFERENT
 
 
 def process_log(line: str):

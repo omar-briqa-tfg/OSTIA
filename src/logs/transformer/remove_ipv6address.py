@@ -1,6 +1,6 @@
-from src.transformer.transformer_interface import ITransformer
+from src.logs.transformer.transformer_interface import ITransformer
 
-from src.utils.regex_patterns import IPV6_PATTERN
+from src.logs.utils.regex_patterns import IPV6_PATTERN
 
 import re
 

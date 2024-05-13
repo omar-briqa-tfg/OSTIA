@@ -1,4 +1,4 @@
-from src.filter.filter_interface import IFilter
+from src.logs.filter.filter_interface import IFilter
 
 
 class WithoutIpAddress(IFilter):

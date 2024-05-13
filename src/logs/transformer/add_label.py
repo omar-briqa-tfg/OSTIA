@@ -1,4 +1,4 @@
-from src.transformer.transformer_interface import ITransformer
+from src.logs.transformer.transformer_interface import ITransformer
 
 
 class AddLabel(ITransformer):

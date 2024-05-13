@@ -1,7 +1,7 @@
 from datetime import datetime
 
 
-def to_iso_format(date: str, time: str) -> (str, str):
+def to_iso_format(date: str, time: str) -> tuple[str, str]:
 
     date_iso = datetime.strptime(date, '%d/%b/%Y').date().isoformat()
     time_iso = datetime.strptime(time, '%H:%M:%S %z').time().isoformat()
