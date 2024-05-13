@@ -1,6 +1,6 @@
-from src.filter.filter_interface import IFilter
+from src.logs.filter.filter_interface import IFilter
 
-from src.utils.regex_patterns import SEARCH_KEYS
+from src.logs.utils.regex_patterns import SEARCH_KEYS
 
 
 class SearchResource(IFilter):

@@ -1,7 +1,7 @@
-from src.transformer.transformer_interface import ITransformer
+from src.logs.transformer.transformer_interface import ITransformer
 
 import re
-from typing import Union, Tuple, Dict, Any
+from typing import Any
 
 
 class ToJSON(ITransformer):

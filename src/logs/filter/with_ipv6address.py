@@ -1,6 +1,6 @@
-from src.filter.filter_interface import IFilter
+from src.logs.filter.filter_interface import IFilter
 
-from src.utils.regex_patterns import IPV6_PATTERN
+from src.logs.utils.regex_patterns import IPV6_PATTERN
 
 import re
 

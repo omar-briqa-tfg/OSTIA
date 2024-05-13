@@ -1,6 +1,6 @@
-from src.forwarder.forwarder_interface import IForwarder
+from src.logs.forwarder.forwarder_interface import IForwarder
 
-from src.utils.date_converter import to_timestamp
+from src.logs.utils.date_converter import to_timestamp
 
 from influxdb_client import InfluxDBClient
 from influxdb_client.client.write_api import ASYNCHRONOUS
