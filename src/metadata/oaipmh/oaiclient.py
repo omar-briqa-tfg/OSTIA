@@ -1,14 +1,27 @@
-from sickle import Sickle
-import xmltodict
-import json
 import os
+import json
+import xmltodict
+from typing import Any, Optional, Iterator
 
-URL = os.environ.get('UPCOMMONS_METADATA_URL')
-METADATA_PREFIX = os.environ.get('UPCOMMONS_METADATA_PREFIX')
+from sickle import Sickle
 
-sickle = Sickle(endpoint=URL)
-records = sickle.ListRecords(metadataPrefix=METADATA_PREFIX)
 
-record = records.next()
+class OAIClient:
 
-print(json.dumps(xmltodict.parse(str(record)), indent=4))
+    def __init__(self, endpoint: str, metadataPrefix: str) -> None:
+
+        self.url: str = endpoint
+        self.prefix: str = metadataPrefix
+        self.client: Optional[Sickle] = Sickle(endpoint=endpoint)
+
+    def get_records(self, resumptionToken: Optional[str]) -> tuple[Iterator, str]:
+
+        records = None
+
+        if resumptionToken is None:
+            records = self.client.ListRecords(metadataPrefix=self.prefix)
+
+        else:
+            records = self.client.ListRecords(resumptionToken=resumptionToken)
+
+        return records, records.resumption_token.token
