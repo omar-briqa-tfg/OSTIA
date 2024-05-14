@@ -44,6 +44,7 @@ METADATA_PREFIX = os.environ.get('UPCOMMONS_METADATA_PREFIX')
 
 client = OAIClient(endpoint=URL, metadataPrefix=METADATA_PREFIX)
 
-metadata, resumptionToken = process_metadata(client, None)
-
-print(len(metadata))
+resumptionToken = None
+for _ in range(XXX):
+    metadata, resumptionToken = process_metadata(client, resumptionToken=resumptionToken)
+    print(len(metadata), resumptionToken)
