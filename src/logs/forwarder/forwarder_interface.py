@@ -7,4 +7,4 @@ class IForwarder(ABC):
 
     @abstractmethod
     def forward(cls, log: dict, raw_log: str) -> int:
-        pass
+        raise NotImplementedError("Subclasses must implement this method")
