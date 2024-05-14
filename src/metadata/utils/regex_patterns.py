@@ -1,1 +1,0 @@
-BITSTREAM = r'bitstreams\/([^\/]*)\/'
