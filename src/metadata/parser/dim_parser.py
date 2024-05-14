@@ -16,7 +16,7 @@ class DimParser(IParser):
             lang = data.get('@lang', None)
 
             metadata_key = '.'.join([value for value in [schema, element, qualifier, lang] if value])
-            metadata_value = data.get('#text', '').encode('latin-1', errors='ignore').decode('unicode-escape')
+            metadata_value = data.get('#text', '').encode('latin-1', errors='ignore').decode('unicode-escape', errors='ignore')
 
             if metadata_key in upcommons_metadata:
                 if not isinstance(upcommons_metadata[metadata_key], list):
