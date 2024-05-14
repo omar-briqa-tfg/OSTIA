@@ -5,4 +5,4 @@ class IParser(ABC):
 
     @abstractmethod
     def parse(cls, metadata: dict) -> list[dict]:
-        pass
+        raise NotImplementedError("Subclasses must implement this method")

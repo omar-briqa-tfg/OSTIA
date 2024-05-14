@@ -5,4 +5,4 @@ class IFilter(ABC):
 
     @abstractmethod
     def filter(cls, log: str) -> bool:
-        pass
+        raise NotImplementedError("Subclasses must implement this method")
