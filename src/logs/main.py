@@ -67,3 +67,5 @@ def process_log(line: str):
 #
 #     for log in logs:
 #         process_log(log.decode('utf-8', errors='ignore'))
+#
+#     InfluxDbForwarder.close()

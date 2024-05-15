@@ -34,6 +34,11 @@ class InfluxDbForwarder(IForwarder):
         # TODO: return correct value
         return 0
 
+    @classmethod
+    def close(cls) -> None:
+        if cls.influxDbClient is not None:
+            cls.influxDbClient.close()
+
     @staticmethod
     def _set_log_tags(log: dict) -> dict:
         if log['content'] == "error":
