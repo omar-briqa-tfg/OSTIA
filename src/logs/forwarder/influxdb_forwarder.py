@@ -19,7 +19,6 @@ class InfluxDbForwarder(IForwarder):
     @classmethod
     def forward(cls, log: dict, raw_log: str) -> int:
 
-        # TODO: check dict when content == 'error'
         data = [{
             'measurement': 'demo',
             'tags': cls._set_log_tags(log),
@@ -49,7 +48,7 @@ class InfluxDbForwarder(IForwarder):
 
     @staticmethod
     def _set_log_fields(log: dict, raw_log: str):
-        if log['type'] == "recurs" and 'resource' in log:
+        if log.get('type') == 'recurs' and 'resource' in log:
             return {
                 'log': raw_log,
                 'recurs': str(log['resource'])
