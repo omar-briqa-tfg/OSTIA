@@ -66,7 +66,11 @@ class InfluxDbForwarder(IForwarder):
         # TODO: check race condition
         if cls.influxDbClient is None:
             cls._get_influxdb_credentials()
-            cls.influxDbClient = InfluxDBClient(url=cls.influxdb_url, token=cls.influxdb_token).write_api(ASYNCHRONOUS)
+            cls.influxDbClient = InfluxDBClient(
+                url=cls.influxdb_url,
+                token=cls.influxdb_token,
+                enable_gzip=True
+            ).write_api(ASYNCHRONOUS)
         return cls.influxDbClient
 
     @classmethod
