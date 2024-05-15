@@ -3,7 +3,7 @@ from src.logs.forwarder.forwarder_interface import IForwarder
 from src.logs.utils.date_converter import to_timestamp
 
 from influxdb_client import InfluxDBClient
-from influxdb_client.client.write_api import ASYNCHRONOUS
+from influxdb_client.client.write_api import SYNCHRONOUS
 
 import os
 
@@ -70,7 +70,7 @@ class InfluxDbForwarder(IForwarder):
                 url=cls.influxdb_url,
                 token=cls.influxdb_token,
                 enable_gzip=True
-            ).write_api(ASYNCHRONOUS)
+            ).write_api(SYNCHRONOUS)
         return cls.influxDbClient
 
     @classmethod
