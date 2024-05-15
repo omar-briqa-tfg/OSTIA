@@ -3,6 +3,8 @@ from src.logs.filter.search_resource import SearchResource
 from src.logs.filter.access_resource import AccessResource
 from src.logs.filter.with_ipv6address import WithIPv6Address
 from src.logs.filter.without_ipaddress import WithoutIpAddress
+from src.logs.filter.access_resource_bitstream import AccessResourceBitstream
+
 
 from src.logs.transformer.to_json import ToJSON
 from src.logs.transformer.add_label import AddLabel
@@ -43,6 +45,9 @@ def process_log(line: str):
 
     if AccessResource.filter(resource):
         AddResourceIdLabel.transform(log, resource)
+        AddLabel.transform(log, LABEL_TYPE, LABEL_TYPE_RESOURCE)
+
+    elif AccessResourceBitstream.filter(resource):
         AddLabel.transform(log, LABEL_TYPE, LABEL_TYPE_RESOURCE)
 
     elif WebResource.filter(resource):
