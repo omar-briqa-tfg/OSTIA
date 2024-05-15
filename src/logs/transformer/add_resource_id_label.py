@@ -1,6 +1,6 @@
 from src.logs.transformer.transformer_interface import ITransformer
 
-from src.logs.utils.regex_patterns import BITSTREAM, HANDLE
+from src.logs.utils.regex_patterns import HANDLE
 
 import re
 
@@ -16,12 +16,4 @@ class AddResourceIdLabel(ITransformer):
             ids = list({id[0] for id in handle})
             ids = ids[0] if len(ids) == 1 else ids
 
-        else:
-
-            bitstream = re.compile(BITSTREAM).findall(resource)
-            if len(bitstream) > 0:
-
-                ids = list({id for id in bitstream})
-                ids = ids[0] if len(ids) == 1 else ids
-
-        log['resource'] = ids
+            log['resource'] = ids
