@@ -55,3 +55,10 @@ def process_log(line: str):
         AddLabel.transform(log, LABEL_TYPE, LABEL_TYPE_OTHERS)
 
     return InfluxDbForwarder.forward(log, line)
+
+
+# with open('13-03-2015.log', mode='rb') as file:
+#     logs = file.readlines()
+#
+#     for log in logs:
+#         process_log(log.decode('utf-8', errors='ignore'))
