@@ -1,6 +1,6 @@
 from src.logs.forwarder.forwarder_interface import IForwarder
 
-from src.logs.utils.date_converter import to_timestamp
+from src.logs.utils.date_converter import to_nanoseconds
 
 from influxdb_client import InfluxDBClient
 from influxdb_client.client.write_api import WriteOptions, WriteType
@@ -16,19 +16,21 @@ class InfluxDbForwarder(IForwarder):
     influxdb_bucket: str | None = None
     influxDbClient: InfluxDBClient | None = None
 
+    previous_timestamp: int = 0
+    previous_date: tuple[str, str] = ('', '')
+
     @classmethod
     def forward(cls, log: dict, raw_log: str) -> int:
 
-        data = [{
+        data = {
             'measurement': 'demo',
             'tags': cls._set_log_tags(log),
             'fields': cls._set_log_fields(log, raw_log),
-            'time': to_timestamp(log['date'], log['time'])
-        }]
+            'time': cls._set_timestamp(log['date'], log['time'])
+        }
 
         client_write_api = cls._get_influxdb_client_write()
 
-        # TODO: do not overwrite logs with the same timestamp
         client_write_api.write(record=data, write_precision='s', org=cls.influxdb_org, bucket=cls.influxdb_bucket)
 
         # TODO: return correct value
@@ -83,3 +85,16 @@ class InfluxDbForwarder(IForwarder):
         cls.influxdb_url = os.environ.get('INFLUXDB_URL')
         cls.influxdb_token = os.environ.get('INFLUXDB_TOKEN')
         cls.influxdb_bucket = os.environ.get('INFLUXDB_BUCKET')
+
+    @classmethod
+    def _set_timestamp(cls, date: str, time: str) -> int:
+
+        ts = to_nanoseconds(date, time)
+
+        if (date, time) == cls.previous_date:
+            ts = cls.previous_timestamp = cls.previous_timestamp + 1
+        else:
+            cls.previous_timestamp = ts
+
+        cls.previous_date = (date, time)
+        return ts

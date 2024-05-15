@@ -12,3 +12,8 @@ def to_iso_format(date: str, time: str) -> tuple[str, str]:
 def to_timestamp(date: str, time: str) -> int:
 
     return int(datetime.strptime(date + ' ' + time, '%d/%b/%Y %H:%M:%S %z').timestamp())
+
+
+def to_nanoseconds(date: str, time: str) -> int:
+
+    return int(to_timestamp(date, time) * 1e9)
