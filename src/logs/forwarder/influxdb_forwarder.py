@@ -63,7 +63,6 @@ class InfluxDbForwarder(IForwarder):
 
     @classmethod
     def _get_influxdb_client_write(cls) -> InfluxDBClient:
-        # TODO: check race condition
         if cls.influxDbClient is None:
             cls._get_influxdb_credentials()
             cls.influxDbClient = InfluxDBClient(
