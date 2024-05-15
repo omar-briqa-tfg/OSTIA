@@ -49,7 +49,7 @@ class InfluxDbForwarder(IForwarder):
 
     @staticmethod
     def _set_log_fields(log: dict, raw_log: str):
-        if log['type'] == "recurs":
+        if log['type'] == "recurs" and 'resource' in log:
             return {
                 'log': raw_log,
                 'recurs': str(log['resource'])
