@@ -40,10 +40,10 @@ class InfluxDbForwarder(IForwarder):
             return {'content': "error"}
         else:
             return {
-                'type': log['type'],
                 'content': log['content'],
                 'method': log['request']['method'],
-                'status_code': log['request']['status_code']
+                'status_code': log['request']['status_code'],
+                'type': log['type']
             }
 
     @staticmethod
