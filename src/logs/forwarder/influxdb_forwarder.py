@@ -3,6 +3,7 @@ from src.logs.forwarder.forwarder_interface import IForwarder
 from src.logs.utils.date_converter import to_timestamp
 
 from influxdb_client import InfluxDBClient
+from influxdb_client.client.write_api import WriteOptions, WriteType
 
 import os
 
@@ -68,7 +69,12 @@ class InfluxDbForwarder(IForwarder):
                 url=cls.influxdb_url,
                 token=cls.influxdb_token,
                 enable_gzip=True
-            ).write_api()
+            ).write_api(
+                write_options=WriteOptions(
+                    write_type=WriteType.batching,
+                    batch_size=500,
+                    flush_interval=2_000
+            ))
         return cls.influxDbClient
 
     @classmethod
