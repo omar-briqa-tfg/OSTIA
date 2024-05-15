@@ -19,7 +19,6 @@ class InfluxDbForwarder(IForwarder):
     @classmethod
     def forward(cls, log: dict, raw_log: str) -> int:
 
-        # TODO: check dict when content == 'error'
         data = [{
             'measurement': 'demo',
             'tags': cls._set_log_tags(log),
