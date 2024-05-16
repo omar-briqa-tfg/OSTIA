@@ -1,8 +1,10 @@
+from src.metadata.oaipmh.oaiclient import OAIClient
+
 from src.metadata.parser.dim_parser import DimParser
 
 from src.metadata.filter.record_deleted import RecordDeleted
 
-from src.metadata.oaipmh.oaiclient import OAIClient
+from src.metadata.forwarder.filesystem_forwarder import FileSystemForwarder
 
 from src.metadata.utils.get_resource_id import get_resource_id
 from src.metadata.utils.constants import SIZE_RECORDS_LIST
@@ -12,7 +14,7 @@ import json
 import xmltodict
 
 
-def process_metadata(client: OAIClient, resumptionToken: str | None, batch: int) -> tuple[list[dict], str]:
+def process_metadata(client: OAIClient, resumptionToken: str | None, batch: int) -> str:
 
     metadataList = []
     records, resumption_token = client.get_records(resumptionToken=resumptionToken)
@@ -44,9 +46,9 @@ def process_metadata(client: OAIClient, resumptionToken: str | None, batch: int)
 
         endOfRecords = endOfRecords - 1
 
-    # TODO: forward
+    FileSystemForwarder.forward(metadata_list=metadataList, batch=int(batch * SIZE_RECORDS_LIST))
 
-    return metadataList, resumption_token
+    return resumption_token
 
 URL = os.environ.get('UPCOMMONS_METADATA_URL')
 METADATA_PREFIX = os.environ.get('UPCOMMONS_METADATA_PREFIX')
@@ -56,7 +58,7 @@ client = OAIClient(endpoint=URL, metadataPrefix=METADATA_PREFIX)
 iteration = 0
 resumptionToken = None
 while True:
-    metadata, resumptionToken = process_metadata(client, resumptionToken=resumptionToken, batch=iteration)
+    resumptionToken = process_metadata(client, resumptionToken=resumptionToken, batch=iteration)
     if resumptionToken is None:
         break
     iteration = iteration + 1
