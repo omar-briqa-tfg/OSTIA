@@ -11,10 +11,11 @@ from src.metadata.utils.constants import SIZE_RECORDS_LIST
 
 import os
 import json
+import time
 import xmltodict
 
 
-def process_metadata(client: OAIClient, resumptionToken: str | None, batch: int) -> str:
+def process_metadata(client: OAIClient, resumptionToken: str | None, batch: int) -> tuple[str, int]:
 
     metadataList = []
     records, resumption_token = client.get_records(resumptionToken=resumptionToken)
@@ -48,17 +49,34 @@ def process_metadata(client: OAIClient, resumptionToken: str | None, batch: int)
 
     FileSystemForwarder.forward(metadata_list=metadataList, batch=(batch * int(SIZE_RECORDS_LIST)))
 
-    return resumption_token
+    return resumption_token, len(metadata_list)
 
 URL = os.environ.get('UPCOMMONS_METADATA_URL')
 METADATA_PREFIX = os.environ.get('UPCOMMONS_METADATA_PREFIX')
 
 client = OAIClient(endpoint=URL, metadataPrefix=METADATA_PREFIX)
 
+stats = {
+    'n_metadata': 0,
+    'time': 0
+}
+
+start_time = time.time()
+
 iteration = 0
+emptyMetadata = False
 resumptionToken = None
-while True:
-    resumptionToken = process_metadata(client, resumptionToken=resumptionToken, batch=iteration)
-    if resumptionToken is None:
-        break
+while not emptyMetadata:
+    resumptionToken, total_metadata = process_metadata(client, resumptionToken=resumptionToken, batch=iteration)
+
+    stats['n_metadata'] = stats['n_metadata'] + total_metadata
+    if iteration % 100:
+        print('metadata track: ', int(iteration * SIZE_RECORDS_LIST))
+
+    emptyMetadata = True # esumptionToken is None
     iteration = iteration + 1
+
+end_time = time.time()
+stats['time'] = (end_time - start_time)
+
+print(json.dumps(stats, indent=4))
