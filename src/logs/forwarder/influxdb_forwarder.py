@@ -23,7 +23,7 @@ class InfluxDbForwarder(IForwarder):
     def forward(cls, log: dict, raw_log: str) -> int:
 
         data = {
-            'measurement': 'demo',
+            'measurement': 'tfg',
             'tags': cls._set_log_tags(log),
             'fields': cls._set_log_fields(log, raw_log),
             'time': cls._set_timestamp(log['date'], log['time'])
@@ -31,7 +31,7 @@ class InfluxDbForwarder(IForwarder):
 
         client_write_api = cls._get_influxdb_client_write()
 
-        client_write_api.write(record=data, write_precision='s', org=cls.influxdb_org, bucket=cls.influxdb_bucket)
+        client_write_api.write(record=data, write_precision='ns', org=cls.influxdb_org, bucket=cls.influxdb_bucket)
 
         # TODO: return correct value
         return 0
