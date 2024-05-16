@@ -46,7 +46,7 @@ def process_metadata(client: OAIClient, resumptionToken: str | None, batch: int)
 
         endOfRecords = endOfRecords - 1
 
-    FileSystemForwarder.forward(metadata_list=metadataList, batch=int(batch * SIZE_RECORDS_LIST))
+    FileSystemForwarder.forward(metadata_list=metadataList, batch=(batch * int(SIZE_RECORDS_LIST)))
 
     return resumption_token
 
