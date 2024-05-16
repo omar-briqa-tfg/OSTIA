@@ -15,7 +15,7 @@ import time
 import xmltodict
 
 
-def process_metadata(client: OAIClient, resumptionToken: str | None, batch: int) -> tuple[str, int]:
+def process_metadata_batch(client: OAIClient, resumptionToken: str | None, batch: int) -> tuple[str, int]:
 
     metadataList = []
     records, resumption_token = client.get_records(resumptionToken=resumptionToken)
@@ -51,32 +51,35 @@ def process_metadata(client: OAIClient, resumptionToken: str | None, batch: int)
 
     return resumption_token, len(metadataList)
 
-URL = os.environ.get('UPCOMMONS_METADATA_URL')
-METADATA_PREFIX = os.environ.get('UPCOMMONS_METADATA_PREFIX')
+def process_metadata(client: OAIClient) -> dict:
 
-client = OAIClient(endpoint=URL, metadataPrefix=METADATA_PREFIX)
+    stats = {'n_metadata': 0, 'time': 0}
 
-stats = {
-    'n_metadata': 0,
-    'time': 0
-}
+    iteration = 0
+    emptyMetadata = False
+    resumptionToken = None
+    while not emptyMetadata:
+        resumptionToken, total_metadata = process_metadata_batch(client, resumptionToken=resumptionToken, batch=iteration)
 
-start_time = time.time()
+        stats['n_metadata'] = stats['n_metadata'] + total_metadata
+        if iteration % 100:
+            print('metadata track: ', int(iteration * SIZE_RECORDS_LIST))
 
-iteration = 0
-emptyMetadata = False
-resumptionToken = None
-while not emptyMetadata:
-    resumptionToken, total_metadata = process_metadata(client, resumptionToken=resumptionToken, batch=iteration)
+        emptyMetadata = resumptionToken is None
+        iteration = iteration + 1
 
-    stats['n_metadata'] = stats['n_metadata'] + total_metadata
-    if iteration % 100:
-        print('metadata track: ', int(iteration * SIZE_RECORDS_LIST))
+    return stats
 
-    emptyMetadata = True # esumptionToken is None
-    iteration = iteration + 1
+def main():
 
-end_time = time.time()
-stats['time'] = (end_time - start_time)
+    URL = os.environ.get('UPCOMMONS_METADATA_URL')
+    METADATA_PREFIX = os.environ.get('UPCOMMONS_METADATA_PREFIX')
 
-print(json.dumps(stats, indent=4))
+    client = OAIClient(endpoint=URL, metadataPrefix=METADATA_PREFIX)
+
+    start_time = time.time()
+    stats = process_metadata(client=client)
+    end_time = time.time()
+
+    stats['time'] = (end_time - start_time)
+    print(json.dumps(stats, indent=4))
