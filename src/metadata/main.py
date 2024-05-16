@@ -19,7 +19,12 @@ def process_metadata(client: OAIClient, resumptionToken: str | None) -> tuple[li
     endOfRecords = 100
     while endOfRecords > 0:
 
-        record = records.next()
+        try:
+            record = records.next()
+
+        except StopIteration:
+            break
+
         data = xmltodict.parse(str(record))['record']
 
         if not RecordDeleted.filter(data):
@@ -48,6 +53,7 @@ METADATA_PREFIX = os.environ.get('UPCOMMONS_METADATA_PREFIX')
 client = OAIClient(endpoint=URL, metadataPrefix=METADATA_PREFIX)
 
 resumptionToken = None
-for _ in range(5):
+while True:
     metadata, resumptionToken = process_metadata(client, resumptionToken=resumptionToken)
-    print(len(metadata), resumptionToken)
+    if resumptionToken is None:
+        break
