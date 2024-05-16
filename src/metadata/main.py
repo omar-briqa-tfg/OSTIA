@@ -4,6 +4,8 @@ from src.metadata.filter.record_deleted import RecordDeleted
 
 from src.metadata.oaipmh.oaiclient import OAIClient
 
+from src.metadata.utils.get_resource_id import get_resource_id
+
 import os
 import json
 import xmltodict
@@ -27,6 +29,7 @@ def process_metadata(client: OAIClient, resumptionToken: str | None) -> tuple[li
             metadata_list = data['metadata']['mets']['dmdSec']['mdWrap']['xmlData']['dim:dim']['dim:field']
 
             metadata = {
+                'id': get_resource_id(id),
                 'identifier': id,
                 'setSpec': setSpec,
                 'metadata': DimParser.parse(metadata_list)[0]
