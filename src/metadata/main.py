@@ -49,7 +49,7 @@ def process_metadata(client: OAIClient, resumptionToken: str | None, batch: int)
 
     FileSystemForwarder.forward(metadata_list=metadataList, batch=(batch * int(SIZE_RECORDS_LIST)))
 
-    return resumption_token, len(metadata_list)
+    return resumption_token, len(metadataList)
 
 URL = os.environ.get('UPCOMMONS_METADATA_URL')
 METADATA_PREFIX = os.environ.get('UPCOMMONS_METADATA_PREFIX')
