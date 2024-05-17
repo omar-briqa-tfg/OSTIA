@@ -5,12 +5,11 @@ services:
   influxdb:
     image: influxdb:2.6-alpine
     env_file:
-      - influxv2.env
+      - ./influxdb/influxv2.env
     volumes:
-      # Mount for influxdb data directory and configuration
       - influxdbv2:/var/lib/influxdb2:rw
     ports:
-      - "8086:8086"
+      - 8086:8086
     networks:
       - monitoring
   telegraf:
@@ -18,10 +17,9 @@ services:
     depends_on:
       - influxdb
     volumes:
-      # Mount for telegraf config
       - ./telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro
     env_file:
-      - influxv2.env
+      - ./influxdb/influxv2.env
     networks:
       - monitoring
   grafana:
@@ -30,6 +28,18 @@ services:
       - 3000:3000
     networks:
       - monitoring
+  mongo:
+    image: mongo:latest
+    restart: always
+    env_file:
+      - ./mongo/mongo.env
+  mongo-express:
+    image: mongo-express:latest
+    restart: always
+    ports:
+      - 8081:8081
+    env_file:
+      - ./mongo/mongo_express.env
 
 volumes:
   influxdbv2:
