@@ -45,7 +45,7 @@ def process_log(line: str) -> dict:
             LABEL_VALUE: line,
             LABEL_CONTENT: LABEL_CONTENT_ERROR
         }
-        # InfluxDbForwarder.forward(log, line)
+        InfluxDbForwarder.forward(log, line)
 
         stats[LABEL_CONTENT] = LABEL_CONTENT_ERROR
         return stats
@@ -73,7 +73,7 @@ def process_log(line: str) -> dict:
         AddLabel.transform(log, LABEL_TYPE, LABEL_TYPE_OTHERS)
         stats[LABEL_TYPE] = LABEL_TYPE_OTHERS
 
-    # InfluxDbForwarder.forward(log, line)
+    InfluxDbForwarder.forward(log, line)
 
     return stats
 
