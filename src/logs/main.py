@@ -8,7 +8,7 @@ from src.logs.filter.access_resource_bitstream import AccessResourceBitstream
 
 from src.logs.transformer.to_json import ToJSON
 from src.logs.transformer.add_label import AddLabel
-from src.logs.transformer.add_timestamp import AddTimestamp
+from src.logs.transformer.add_timestamp import AddTimestampForwarder
 from src.logs.transformer.remove_ipv6address import RemoveIPv6Address
 from src.logs.transformer.add_resource_id_label import AddResourceIdLabel
 from src.logs.transformer.add_default_ipaddress import AddDefaultIpAddress
@@ -46,7 +46,7 @@ def process_log(line: str) -> dict:
             LABEL_VALUE: line,
             LABEL_CONTENT: LABEL_CONTENT_ERROR
         }
-        AddTimestamp.transform(log, line)
+        AddTimestampForwarder.transform(log, line)
         InfluxDbForwarder.forward(log, line)
 
         stats[LABEL_CONTENT] = LABEL_CONTENT_ERROR
@@ -80,7 +80,7 @@ def process_log(line: str) -> dict:
     return stats
 
 
-year = XXXX
+year = 0
 totalLogs = 0
 input_path = os.environ.get('LOGS_OUTPUT_PATH')
 
