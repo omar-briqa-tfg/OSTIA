@@ -29,7 +29,7 @@ services:
     networks:
       - monitoring
   mongo:
-    image: mongo:8.0-rc-jammy
+    image: mongo:latest
     restart: always
     env_file:
       - ./mongo/mongo.env
@@ -37,7 +37,7 @@ services:
     image: mongo-express:latest
     restart: always
     ports:
-      - 8081:8081
+      - 9081:9081
     env_file:
       - ./mongo/mongo_express.env
 
