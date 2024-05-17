@@ -95,7 +95,7 @@ global_stats = {
 }
 
 start_time = time.time()
-for month in range(1, 12):
+for month in range(1, 13):
 
     folder = Path(input_path) / Path(str(year)) / Path(f'{month:02}')
 
