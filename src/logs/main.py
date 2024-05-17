@@ -80,7 +80,7 @@ def process_log(line: str) -> dict:
     return stats
 
 
-year = 2006
+year = XXXX
 totalLogs = 0
 input_path = os.environ.get('LOGS_OUTPUT_PATH')
 
