@@ -29,7 +29,7 @@ services:
     networks:
       - monitoring
   mongo:
-    image: mongo:latest
+    image: mongo:4.4.6
     restart: always
     env_file:
       - ./mongo/mongo.env
