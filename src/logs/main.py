@@ -46,8 +46,11 @@ def process_log(line: str) -> dict:
             LABEL_VALUE: line,
             LABEL_CONTENT: LABEL_CONTENT_ERROR
         }
-        AddTimestampForwarder.transform(log, line)
-        InfluxDbForwarder.forward(log, line)
+        try:
+            AddTimestampForwarder.transform(log, line)
+            InfluxDbForwarder.forward(log, line)
+        except: # TODO: add specific exception
+            pass
 
         stats[LABEL_CONTENT] = LABEL_CONTENT_ERROR
         return stats
@@ -80,22 +83,22 @@ def process_log(line: str) -> dict:
     return stats
 
 
-year = 0
-totalLogs = 0
+year = 2008
 input_path = os.environ.get('LOGS_OUTPUT_PATH')
 
-global_stats = {
-    'total_logs': 0,
-    LABEL_TYPE_RESOURCE: 0,
-    LABEL_TYPE_SEARCH: 0,
-    LABEL_TYPE_RESOURCE_WEB: 0,
-    LABEL_TYPE_OTHERS: 0,
-    LABEL_CONTENT_ERROR: 0,
-    'time': 0.0
-}
-
-start_time = time.time()
 for month in range(1, 13):
+
+    totalLogs = 0
+    global_stats = {
+        'total_logs': 0,
+        LABEL_TYPE_RESOURCE: 0,
+        LABEL_TYPE_SEARCH: 0,
+        LABEL_TYPE_RESOURCE_WEB: 0,
+        LABEL_TYPE_OTHERS: 0,
+        LABEL_CONTENT_ERROR: 0,
+        'time': 0.0
+    }
+    start_time = time.time()
 
     folder = Path(input_path) / Path(str(year)) / Path(f'{month:02}')
 
@@ -119,10 +122,11 @@ for month in range(1, 13):
                     else:
                         global_stats[stats[LABEL_TYPE]] += 1
 
+    end_time = time.time()
+    global_stats['total_logs'] = totalLogs
+    global_stats['time'] = end_time - start_time
+
+    print(json.dumps(global_stats, indent=4))
+
+
 InfluxDbForwarder.close()
-end_time = time.time()
-
-global_stats['total_logs'] = totalLogs
-global_stats['time'] = end_time - start_time
-
-print(json.dumps(global_stats, indent=4))
