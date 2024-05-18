@@ -78,12 +78,14 @@ def process_log(line: str) -> dict:
         AddLabel.transform(log, LABEL_TYPE, LABEL_TYPE_OTHERS)
         stats[LABEL_TYPE] = LABEL_TYPE_OTHERS
 
-    InfluxDbForwarder.forward(log, line)
+    status = InfluxDbForwarder.forward(log, line)
+    if status == -1:
+        stats[LABEL_CONTENT] = LABEL_CONTENT_ERROR
 
     return stats
 
 
-year = 2008
+year = 2011
 input_path = os.environ.get('LOGS_OUTPUT_PATH')
 
 for month in range(1, 13):
