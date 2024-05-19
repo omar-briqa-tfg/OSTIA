@@ -22,11 +22,16 @@ class InfluxDbForwarder(IForwarder):
     @classmethod
     def forward(cls, log: dict, raw_log: str) -> int:
 
+        try:
+            time = cls._set_timestamp(log['date'], log['time'])
+        except:
+            return 1
+
         data = {
             'measurement': 'tfg',
             'tags': cls._set_log_tags(log),
             'fields': cls._set_log_fields(log, raw_log),
-            'time': cls._set_timestamp(log['date'], log['time'])
+            'time': time
         }
 
         client_write_api = cls._get_influxdb_client_write()
@@ -74,7 +79,7 @@ class InfluxDbForwarder(IForwarder):
             ).write_api(
                 write_options=WriteOptions(
                     write_type=WriteType.batching,
-                    batch_size=500,
+                    batch_size=5_000,
                     flush_interval=2_000
             ))
         return cls.influxDbClient
