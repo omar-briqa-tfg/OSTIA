@@ -4,15 +4,18 @@ from src.metadata.parser.dim_parser import DimParser
 
 from src.metadata.filter.record_deleted import RecordDeleted
 
+from src.metadata.forwarder.mongodb_forwarder import MongoDbForwarder
 from src.metadata.forwarder.filesystem_forwarder import FileSystemForwarder
 
 from src.metadata.utils.get_resource_id import get_resource_id
 from src.metadata.utils.constants import SIZE_RECORDS_LIST
 
 import os
+import re
 import json
 import time
 import xmltodict
+from pathlib import Path
 
 
 def process_metadata_batch(client: OAIClient, resumptionToken: str | None, batch: int) -> tuple[str, int]:
@@ -51,7 +54,8 @@ def process_metadata_batch(client: OAIClient, resumptionToken: str | None, batch
 
     return resumption_token, len(metadataList)
 
-def process_metadata(client: OAIClient) -> dict:
+
+def get_metadata(client: OAIClient) -> dict:
 
     stats = {'n_metadata': 0, 'time': 0}
 
@@ -70,16 +74,41 @@ def process_metadata(client: OAIClient) -> dict:
 
     return stats
 
-def main():
 
-    URL = os.environ.get('UPCOMMONS_METADATA_URL')
-    METADATA_PREFIX = os.environ.get('UPCOMMONS_METADATA_PREFIX')
+def process_metadata() -> float:
 
-    client = OAIClient(endpoint=URL, metadataPrefix=METADATA_PREFIX)
+    base_path = Path(os.environ.get('METADATA_OUTPUT_PATH'))
 
     start_time = time.time()
-    stats = process_metadata(client=client)
+    for batch in base_path.iterdir():
+        print(str(batch.name))
+        if batch.is_dir():
+            for metadata_file in batch.iterdir():
+                if re.match(pattern=r'.*\/\d+_\d+\.metadata.json', string=str(metadata_file)):
+                    MongoDbForwarder.forward(metadata_file)
+    MongoDbForwarder.close()
     end_time = time.time()
 
-    stats['time'] = (end_time - start_time)
-    print(json.dumps(stats, indent=4))
+    return end_time - start_time
+
+def main():
+
+    METADATA_IN_SYSTEM = int(os.environ.get('METADATA_IN_SYSTEM'))
+
+    if not METADATA_IN_SYSTEM:
+
+        URL = os.environ.get('UPCOMMONS_METADATA_URL')
+        METADATA_PREFIX = os.environ.get('UPCOMMONS_METADATA_PREFIX')
+
+        client = OAIClient(endpoint=URL, metadataPrefix=METADATA_PREFIX)
+
+        start_time = time.time()
+        stats = get_metadata(client=client)
+        end_time = time.time()
+
+        stats['time'] = (end_time - start_time)
+        print(json.dumps(stats, indent=4))
+
+    else:
+        t = process_metadata()
+        print(f'time: {t}')
