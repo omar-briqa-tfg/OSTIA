@@ -118,8 +118,8 @@ create_directory() {
 if [[ $MODE == "year-month" ]]; then
     logs=$(ls "$INPUT_PATH" | grep "$YEAR-$MONTH")
     if [[ -n "$logs" ]]; then
-        create_directory "$YEAR" "$month"
-        process_logs "$logs" "$OUTPUT_PATH/$YEAR/$month"
+        create_directory "$YEAR" "$MONTH"
+        process_logs "$logs" "$OUTPUT_PATH/$YEAR/$MONTH"
     fi
 
 elif [[ $MODE == "year" ]]; then
