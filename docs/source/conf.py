@@ -6,7 +6,7 @@
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-project = 'OSTIA'
+project = 'Open Science Toolkit Information Access'
 copyright = '2024, Omar Briqa'
 author = 'Omar Briqa'
 release = '0.1'
@@ -18,6 +18,8 @@ extensions = []
 
 templates_path = ['_templates']
 exclude_patterns = []
+
+
 
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
