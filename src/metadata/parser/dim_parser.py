@@ -1,3 +1,5 @@
+from typing import Dict, List, Any
+
 from src.metadata.parser.parser_interface import IParser
 
 
@@ -5,8 +7,16 @@ class DimParser(IParser):
 
     @classmethod
     def parse(cls, metadata: dict) -> list[dict]:
+        """
+        Returns a list of metadata entries adapted to the DIM (DSpace Intermediate Format) format.
 
-        upcommons_metadata = {}
+        :param metadata: The metadata entry to be parsed.
+        :type metadata: dict
+        :return: List of the metadata values parsed in DIM.
+        :rtype: list[dict]
+        """
+
+        upcommons_metadata: dict[str, list[Any] | Any] = {}
 
         for data in metadata:
 
@@ -24,6 +34,5 @@ class DimParser(IParser):
                 upcommons_metadata[metadata_key].append(metadata_value)
             else:
                 upcommons_metadata[metadata_key] = metadata_value
-
 
         return [upcommons_metadata]

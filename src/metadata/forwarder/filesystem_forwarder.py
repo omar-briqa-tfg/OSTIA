@@ -14,6 +14,16 @@ class FileSystemForwarder(IForwarder):
 
     @classmethod
     def forward(cls, metadata_list: list[dict], batch: int) -> int:
+        """
+        Forwards the batched metadata list to the filesystem.
+
+        :param metadata_list: List of metadata entries.
+        :type metadata_list: list[dict]
+        :param batch: Number of the metadata_list batch.
+        :type batch: int
+        :return: Status code of the action.
+        :rtype: int
+        """
 
         folder = cls._get_subfolder(batch)
         filename = f'{str(batch)}_{str(batch + SIZE_RECORDS_LIST)}.metadata.json'
@@ -27,6 +37,14 @@ class FileSystemForwarder(IForwarder):
 
     @classmethod
     def _get_subfolder(cls, batch: int) -> Path:
+        """
+        Creates (if not exists) the path where the batch of the metadata entries will be stored.
+
+        :param batch: Number of the metadata list batch.
+        :type batch: int
+        :return: The directory where the metadata will be stored.
+        :rtype: Path
+        """
 
         batch = (batch // cls.folder_size) * cls.folder_size
 
