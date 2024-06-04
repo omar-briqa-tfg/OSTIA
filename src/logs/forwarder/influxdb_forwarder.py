@@ -2,7 +2,7 @@ from src.logs.forwarder.forwarder_interface import IForwarder
 
 from src.logs.utils.date_converter import to_nanoseconds
 
-from influxdb_client import InfluxDBClient
+from influxdb_client import InfluxDBClient, WriteApi
 from influxdb_client.client.write_api import WriteOptions, WriteType
 
 import os
@@ -21,6 +21,16 @@ class InfluxDbForwarder(IForwarder):
 
     @classmethod
     def forward(cls, log: dict, raw_log: str) -> int:
+        """
+        Forwards the **log** entry to InfluxDB.
+
+        :param log: The processed log entry to be forwarded, represented as a dictionary.
+        :type log: dict
+        :param raw_log: The log entry to be checked.
+        :type raw_log: str
+        :return: Status code of the  action.
+        :rtype: int
+        """
 
         try:
             time = cls._set_timestamp(log['date'], log['time'])
@@ -43,11 +53,24 @@ class InfluxDbForwarder(IForwarder):
 
     @classmethod
     def close(cls) -> None:
+        """
+        Close the *InfluxDB* write api client.
+
+        :return: None
+        """
         if cls.influxDbClient is not None:
             cls.influxDbClient.close()
 
     @staticmethod
     def _set_log_tags(log: dict) -> dict:
+        """
+        Defines the *InfluxDB* tags based on the content of the log entry.
+
+        :param log: The log entry, represented as a dictionary.
+        :type log: dict
+        :return: A dictionary with the specific tags.
+        :rtype: dict
+        """
         if log['content'] == "error":
             return {'content': "error"}
         else:
@@ -59,7 +82,17 @@ class InfluxDbForwarder(IForwarder):
             }
 
     @staticmethod
-    def _set_log_fields(log: dict, raw_log: str):
+    def _set_log_fields(log: dict, raw_log: str) -> dict:
+        """
+        Defines the *InfluxDB* fields based on the content of the log entry.
+
+        :param log: The processed log entry to be forwarded, represented as a dictionary.
+        :type log: dict
+        :param raw_log: The log entry to be checked.
+        :type raw_log: dict
+        :return: A dictionary with the specific fields.
+        :rtype: dict
+        """
         if log.get('type') == 'recurs' and 'resource' in log:
             return {
                 'log': raw_log,
@@ -69,7 +102,13 @@ class InfluxDbForwarder(IForwarder):
             return {'log': raw_log}
 
     @classmethod
-    def _get_influxdb_client_write(cls) -> InfluxDBClient:
+    def _get_influxdb_client_write(cls) -> WriteApi:
+        """
+        Returns the *InfluxDB* write client
+
+        :return: *InfluxDB* write api client
+        :rtype: WriteApi
+        """
         if cls.influxDbClient is None:
             cls._get_influxdb_credentials()
             cls.influxDbClient = InfluxDBClient(
@@ -86,6 +125,11 @@ class InfluxDbForwarder(IForwarder):
 
     @classmethod
     def _get_influxdb_credentials(cls) -> None:
+        """
+        Obtains the *InfluxDB* credentials from the environment variables.
+
+        :return: None
+        """
         cls.influxdb_org = os.environ.get('INFLUXDB_ORG')
         cls.influxdb_url = os.environ.get('INFLUXDB_URL')
         cls.influxdb_token = os.environ.get('INFLUXDB_TOKEN')
@@ -93,6 +137,18 @@ class InfluxDbForwarder(IForwarder):
 
     @classmethod
     def _set_timestamp(cls, date: str, time: str) -> int:
+        """
+        Converts the date, time pair in to a UNIX timestamp.
+
+        At every collision with *previous_timestamp* one second is added.
+
+        :param date: Date in dd-mm-yyyy format.
+        :type date: str
+        :param time: Time in hh:mm:ss z format.
+        :type time: str
+        :return: Timestamp of the <date,time> pair.
+        :rtype: int
+        """
 
         ts = to_nanoseconds(date, time)
 
