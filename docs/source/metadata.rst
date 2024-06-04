@@ -49,4 +49,3 @@ Parser Interface
 DimParser
 ~~~~~~~~~~~~~~~~~~~~~~~
 .. autofunction:: src.metadata.parser.dim_parser.DimParser.parse
-
