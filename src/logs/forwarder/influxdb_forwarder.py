@@ -28,7 +28,7 @@ class InfluxDbForwarder(IForwarder):
         :type log: dict
         :param raw_log: The log entry to be checked.
         :type raw_log: str
-        :return: Status code of the  action.
+        :return: Status code of the action.
         :rtype: int
         """
 
@@ -126,7 +126,7 @@ class InfluxDbForwarder(IForwarder):
     @classmethod
     def _get_influxdb_credentials(cls) -> None:
         """
-        Obtains the *InfluxDB* credentials from the environment variables.
+        Obtains *InfluxDB* credentials from environment variables.
 
         :return: None
         """

@@ -15,6 +15,14 @@ class OAIClient:
         self.client: Optional[Sickle] = Sickle(endpoint=endpoint)
 
     def get_records(self, resumptionToken: Optional[str]) -> tuple[Iterator, str]:
+        """
+        Obtains a metadata iterator that follows the value of the **resumptionToken**.
+
+        :param resumptionToken: Resumption token needed for the getRecords OAI-PMH request.
+        :type resumptionToken: Optional[str]
+        :return: A tuple composed by an iterator over the metadata, and the next resumptionToken.
+        :rtype: tuple[Iterator, str]
+        """
 
         records = None
 
