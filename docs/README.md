@@ -1,6 +1,6 @@
 # Project code documentation
 
-# 1. Create and activate a Python virtual environment
+# Create and activate a Python virtual environment
 
 It is recommended to use a virtual environment to manage dependencies. You can create and activate a virtual environment as follows:
 
@@ -15,7 +15,7 @@ Activate the virtual environment:
 source venv/bin/activate
 ```
 
-# 2. Install the requirements
+# Install the requirements
 
 Install the necessary packages listed in the [`requirements.txt`](/docs/requirements.txt) file:
 
@@ -23,7 +23,7 @@ Install the necessary packages listed in the [`requirements.txt`](/docs/requirem
 pip install -r requirements.txt
 ```
 
-# 3. Set the `PYTHONPATH`
+# Set the `PYTHONPATH`
 
 Ensure the `PYTHONPATH` is set to include your source directory. This is important for Sphinx to locate your modules.
 
@@ -33,7 +33,7 @@ export PYTHONPATH=../
 ```
 
 
-# 4. Set the test environment variables
+# Set the test environment variables
 
 Set the test environment variables needed in certain modules.
 
@@ -41,7 +41,7 @@ Set the test environment variables needed in certain modules.
 export $(xargs < .env_test)
 ```
 
-# 5. Generate and read the documentation
+# Generate and read the documentation
 
 Use the `make` command to generate HTML documentation with Sphinx. You can read the documentation by accessing to the `docs/build/html/index.html` file:
 
