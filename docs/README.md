@@ -15,16 +15,7 @@ Activate the virtual environment:
 source venv/bin/activate
 ```
 
-# 2. Set the `PYTHONPATH`
-
-Ensure the `PYTHONPATH` is set to include your source directory. This is important for Sphinx to locate your modules.
-
-Run the following command at the [root of the project](/).
-```shell
-export PYTHONPATH=$PYTHONPATH:$(pwd)
-```
-
-# 3. Install the requirements
+# 2. Install the requirements
 
 Install the necessary packages listed in the [`requirements.txt`](/docs/requirements.txt) file:
 
@@ -32,7 +23,25 @@ Install the necessary packages listed in the [`requirements.txt`](/docs/requirem
 pip install -r requirements.txt
 ```
 
-# 4. Generate and read the documentation
+# 3. Set the `PYTHONPATH`
+
+Ensure the `PYTHONPATH` is set to include your source directory. This is important for Sphinx to locate your modules.
+
+Run the following command at the [root of the project](/).
+```shell
+export PYTHONPATH=../
+```
+
+
+# 4. Set the test environment variables
+
+Set the test environment variables needed in certain modules.
+
+```shell
+export $(xargs < .env_test)
+```
+
+# 5. Generate and read the documentation
 
 Use the `make` command to generate HTML documentation with Sphinx. You can read the documentation by accessing to the `docs/build/html/index.html` file:
 
