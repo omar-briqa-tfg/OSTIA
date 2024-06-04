@@ -3,7 +3,7 @@ from src.logs.transformer.transformer_interface import ITransformer
 import re
 
 
-class AddTimestampForwarder(ITransformer):
+class AddTimestamp(ITransformer):
 
     @classmethod
     def transform(cls, log: str, raw_log) -> None:

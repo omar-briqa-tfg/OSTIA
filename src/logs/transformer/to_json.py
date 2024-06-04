@@ -8,6 +8,13 @@ class ToJSON(ITransformer):
 
     @classmethod
     def transform(cls, log: str) -> tuple[dict[str, str | dict[str, str | Any]], int]:
+        """
+        Transforms the raw log represented as a string to a dictionary structure.
+
+        :param log: Log entry to be transformed.
+        :return: Pair composed by the log entry represented as a dictionary and the status of the transformation.
+        :rtype: tuple[dict[str, str | dict[str, str | Any]], int]
+        """
 
         status = 0
 

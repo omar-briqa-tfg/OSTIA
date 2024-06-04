@@ -6,49 +6,30 @@ Filter
 
 Filter interface.
 ~~~~~~~~~~~~~~~~~~~~~~~
-
 .. autofunction:: src.logs.filter.filter_interface.IFilter.filter
 
 AccessResource
 ~~~~~~~~~~~~~~~~~~~~~~~
-
-TODO: complete.
-
 .. autofunction:: src.logs.filter.access_resource.AccessResource.filter
 
 AccessResourceBitstream
 ~~~~~~~~~~~~~~~~~~~~~~~
-
-TODO: complete.
-
 .. autofunction:: src.logs.filter.access_resource_bitstream.AccessResourceBitstream.filter
 
 SearchResource
 ~~~~~~~~~~~~~~~~~~~~~~~
-
-TODO: complete.
-
 .. autofunction:: src.logs.filter.search_resource.SearchResource.filter
 
 WebResource
 ~~~~~~~~~~~~~~~~~~~~~~~
-
-TODO: complete.
-
 .. autofunction:: src.logs.filter.web_resource.WebResource.filter
 
 WithIPv6Address
 ~~~~~~~~~~~~~~~~~~~~~~~
-
-TODO: complete.
-
 .. autofunction:: src.logs.filter.with_ipv6address.WithIPv6Address.filter
 
 WithoutIpAddress
 ~~~~~~~~~~~~~~~~~~~~~~~
-
-TODO: complete.
-
 .. autofunction:: src.logs.filter.without_ipaddress.WithoutIpAddress.filter
 
 Forwarder
@@ -61,9 +42,6 @@ Forwarder ìnterface
 
 InfluxDbForwarder
 ~~~~~~~~~~~~~~~~~~~~~~~
-
-TODO: complete
-
 .. autofunction:: src.logs.forwarder.influxdb_forwarder.InfluxDbForwarder.forward
 
 .. autofunction:: src.logs.forwarder.influxdb_forwarder.InfluxDbForwarder.close
@@ -80,3 +58,23 @@ TODO: complete
 
 Transformer
 -----------
+
+AddDefaultIpAddress
+~~~~~~~~~~~~~~~~~~~~~~~
+.. autofunction:: src.logs.transformer.add_default_ipaddress.AddDefaultIpAddress.transform
+
+AddLabel
+~~~~~~~~~~~~~~~~~~~~~~~
+.. autofunction:: src.logs.transformer.add_label.AddLabel.transform
+
+AddResourceIdLabel
+~~~~~~~~~~~~~~~~~~~~~~~
+.. autofunction:: src.logs.transformer.add_resource_id_label.AddResourceIdLabel.transform
+
+RemoveIPv6Address
+~~~~~~~~~~~~~~~~~~~~~~~
+.. autofunction:: src.logs.transformer.remove_ipv6address.RemoveIPv6Address.transform
+
+ToJSON
+~~~~~~~~~~~~~~~~~~~~~~~
+.. autofunction:: src.logs.transformer.to_json.ToJSON.transform
