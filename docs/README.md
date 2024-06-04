@@ -6,7 +6,7 @@ It is recommended to use a virtual environment to manage dependencies. You can c
 
 Create a virtual environment named 'venv':
 ```shell
-python -m venv venv
+python -m venv ./venv
 ```
 
 Activate the virtual environment:
@@ -38,5 +38,5 @@ Use the `make` command to generate HTML documentation with Sphinx. You can read 
 
 ```shell
 make html
-open docs/build/html/index.html
+open ./build/html/index.html
 ```
