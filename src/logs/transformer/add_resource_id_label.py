@@ -9,6 +9,15 @@ class AddResourceIdLabel(ITransformer):
 
     @classmethod
     def transform(cls, log: dict, resource: str) -> None:
+        """
+        Extracts the resource id(s) from **resource** updates the log with a new *resource* label.
+
+        :param log: Log entry to be transformed.
+        :type log: dict
+        :param resource: Resource that the log access to.
+        :type resource: dict
+        :return: None
+        """
 
         handle = re.compile(HANDLE).findall(resource)
         if len(handle) > 0:
