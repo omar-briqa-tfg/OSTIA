@@ -1,8 +1,15 @@
 [[source]]
-url = "https://pypi.org/simple"
-verify_ssl = true
-name = "pypi"
+url         = "https://pypi.org/simple"
+verify_ssl  = true
+name        = "pypi"
 
 [dev-packages]
-pytest = "==8.2.2"
-pre-commit = "==3.6.2"
+pytest      = "==8.2.2"
+pre-commit  = "==3.6.2"
+
+[requires]
+python_version = "3.11.2"
+
+[scripts]
+logs-test       = "env PYTHONPATH=.:src:test/logs/ pytest test/logs/"
+metadata-test   = "env PYTHONPATH=.:src:test/metadata/ pytest test/metadata/"

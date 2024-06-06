@@ -1,5 +1,5 @@
 import pytest
-from src.logs.filter.access_resource import AccessResource
+from logs.filter.access_resource import AccessResource
 
 @pytest.mark.parametrize(
     "resource",
