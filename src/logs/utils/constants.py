@@ -1,0 +1,12 @@
+LABEL_VALUE = "value"
+
+LABEL_TYPE = "type"
+LABEL_TYPE_SEARCH = "cerca"
+LABEL_TYPE_OTHERS = "altres"
+LABEL_TYPE_RESOURCE = "recurs"
+LABEL_TYPE_RESOURCE_WEB = "recurs-web"
+
+LABEL_CONTENT = "content"
+LABEL_CONTENT_OK = "ok"
+LABEL_CONTENT_ERROR = "error"
+LABEL_CONTENT_DIFFERENT = "diferent"
