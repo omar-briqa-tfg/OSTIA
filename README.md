@@ -2,51 +2,47 @@
 
 ## Introduction
 
-Check thesis report ->  [PDF](https://github.com/OBriqa/TFG)
+Final thesis [ca] report will be available [here](https://github.com/omar-briqa-tfg/OSTIA) soon ...
 
 ## Project Structure
 
 <pre>
 .
+├── LICENCE
+├── Pipfile
 ├── Makefile
 ├── README.md
-├── LICENCE
-└── build/
-│   └── debug/
-│   └── release/
-│       ├── app.exe
-│       └── view.exe
-└── <b>doc</b>umentation/
-│   ├── documentation.md
-│   ├── user-manual.md
-│   └── INSTALL.md
-└── lib/
-│   ├── dependencies/
-│   └── externals/
-└── <b>res</b>ources/
-│   ├── images/
-│   └── icons/
+├── requirements.txt
+├── pre-commit-config.yaml
+└── .github/
+│   └── workflows
+│       └── main.yaml
+└── config
+│   ├── influxdb/
+│   ├── mongodb/
+│   ├── telegraf/
+│   └── docker-compose.yaml
+└── docs/
+│   ├── source/
+│   ├── Makefile
+│   ├── README.md
+│   └── ...
 └── scripts/
-│   ├── generate-docs.sh
-│   ├── run-tests.sh
-│   └── code-formatting.sh
+│   └── unzip.sh
 └── src/
-    ├── log-analyser
-    │   ├── integration/
-    │   ├── main/
-    │   └── test/
-    └── log-viewer
-        ├── integration/
-        ├── main/
-        └── test/
+│   ├── logs
+│   ├── metadata
+│   ├── queries
+|   └── dashboards
+└── test/
+    ├── logs
+    └── metadata
 
 </pre>
 
 ## Summary
 
-<div style="text-align: justify;">
 In the current context of data science, everything related to data is highly valuable. Going over this information, analyzing, decomposing, and extracting everything can provide valuable insights. In our case, we have been given access to the logs of the UPCommons server, the principal repository of digital content resources for UPC.
-</div>
 
 The logs are the access register, the footprint of every user of the platform. Every exam, documentation, papers, videos, etc accessed is being registered. Our objective is to gather all these details, and somehow convert it into valuable information.
 
