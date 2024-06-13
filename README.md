@@ -1,10 +1,10 @@
+<h1 align="center"> Open Science Toolkit Information Access </h1>
+
+![CI](https://github.com/omar-briqa-tfg/OSTIA/actions/workflows/main.yaml/badge.svg)
 [![Contributors][contributors-shield]][contributors-url]
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
 [![MIT License][license-shield]][license-url]
-[![LinkedIn][linkedin-shield]][linkedin-url]
-
-<h1 align="center"> Open Science Toolkit Information Access </h1>
 
 ## Thesis
 
@@ -46,6 +46,19 @@ Final Degree Project [ca] report will be available [here](https://github.com/oma
 
 </pre>
 
+## Built With
+
+
+[![Git][git]][git-url]
+[![GitHub][github]][github-url]
+[![GitHub Actions][github-actions]][github-actions-url]
+[![Python][python]][python-url]
+[![Docker][docker]][docker-url]
+[![InfluxDB][influxdb]][influxdb-url]
+[![MongoDB][mongodb]][mongodb-url]
+[![Bash][bash]][bash-url]
+[![Grafana][grafana]][grafana-url]
+
 ## About The Project
 
 In the current context of data science, everything related to data is highly valuable. Going over this information, analyzing, decomposing, and extracting everything can provide valuable insights. In our case, we have been given access to the logs of the UPCommons server, the principal repository of digital content resources for UPC.
@@ -67,6 +80,11 @@ The code was developed in accordance with the best practices of software enginee
 Distributed under the MIT License. See `LICENSE` for more information.
 
 
+## Contact
+
+[![LinkedIn][linkedin-shield]][linkedin-url] <br>
+[![e-mail][email-shield]][email-url]
+
 [contributors-url]: https://github.com/omar-briqa-tfg/OSTIA/graphs/contributors
 [contributors-shield]: https://img.shields.io/github/contributors/omar-briqa-tfg/OSTIA.svg?style=flat
 [forks-url]: https://github.com/omar-briqa-tfg/OSTIA/network/members
@@ -77,3 +95,23 @@ Distributed under the MIT License. See `LICENSE` for more information.
 [license-shield]: https://img.shields.io/github/license/omar-briqa-tfg/OSTIA.svg?style=flat
 [linkedin-url]: https://www.linkedin.com/in/omar-briqa/
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=flat&logo=linkedin&colorB=555
+[email-url]: mailto:omarbriqa@gmail.com
+[email-shield]:https://img.shields.io/badge/contact-email-blue
+[influxdb]: https://img.shields.io/badge/InfluxDB-22ADF6?style=flat&logo=InfluxDB&logoColor=white
+[influxdb-url]: https://www.influxdata.com/
+[python]: https://img.shields.io/badge/Python-FFD43B?style=flat&logo=python&logoColor=blue
+[python-url]: https://www.python.org/
+[mongodb]: https://img.shields.io/badge/MongoDB-4EA94B?style=flat&logo=mongodb&logoColor=white
+[mongodb-url]: https://www.mongodb.com/
+[docker]: https://img.shields.io/badge/Docker-2CA5E0?style=flat&logo=docker&logoColor=white
+[docker-url]: https://www.docker.com/
+[bash]: https://img.shields.io/badge/Shell_Script-121011?style=flat&logo=gnu-bash&logoColor=white
+[bash-url]: https://www.linuxfoundation.org/
+[git]: https://img.shields.io/badge/GIT-E44C30?style=flat&logo=git&logoColor=white
+[git-url]: https://www.git-scm.com/
+[github]: https://img.shields.io/badge/GitHub-100000?style=flat&logo=github&logoColor=white
+[github-url]: https://github.com/
+[github-actions]: https://img.shields.io/badge/Github%20Actions-282a2e?style=flat&logo=githubactions&logoColor=367cfe
+[github-actions-url]: https://github.com/features/actions
+[grafana]: https://img.shields.io/badge/Grafana-F2F4F9?style=flat&logo=grafana&logoColor=orange&labelColor=F2F4F9
+[grafana-url]: https://grafana.com/
