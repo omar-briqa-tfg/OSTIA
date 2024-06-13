@@ -1,8 +1,14 @@
-# Open Science Toolkit Information Access
+[![Contributors][contributors-shield]][contributors-url]
+[![Forks][forks-shield]][forks-url]
+[![Stargazers][stars-shield]][stars-url]
+[![MIT License][license-shield]][license-url]
+[![LinkedIn][linkedin-shield]][linkedin-url]
 
-## Introduction
+<h1 align="center"> Open Science Toolkit Information Access </h1>
 
-Final thesis [ca] report will be available [here](https://github.com/omar-briqa-tfg/OSTIA) soon ...
+## Thesis
+
+Final Degree Project [ca] report will be available [here](https://github.com/omar-briqa-tfg/OSTIA) soon ...
 
 ## Project Structure
 
@@ -40,7 +46,7 @@ Final thesis [ca] report will be available [here](https://github.com/omar-briqa-
 
 </pre>
 
-## Summary
+## About The Project
 
 In the current context of data science, everything related to data is highly valuable. Going over this information, analyzing, decomposing, and extracting everything can provide valuable insights. In our case, we have been given access to the logs of the UPCommons server, the principal repository of digital content resources for UPC.
 
@@ -55,3 +61,19 @@ Finally, we end up with the final stage. We have been able to build a tool that 
 For example, we can check which resource is the most accessed within a period of time and represent its evolution. If malicious petitions have infected the server, use this tool to analyze the symptoms and create useful metrics and SLOs. Even more, relate the resource to its metadata, and include the most popular authors, as well as the evolution of language use among new published papers, and much more.
 
 The code was developed in accordance with the best practices of software engineering and the software development cycle. The Open Science Toolkit Information Access repository, located at https://github.com/omar-briqa-tfg/OSTIA, is available to the public and is licensed under an MIT license.
+
+## License
+
+Distributed under the MIT License. See `LICENSE` for more information.
+
+
+[contributors-url]: https://github.com/omar-briqa-tfg/OSTIA/graphs/contributors
+[contributors-shield]: https://img.shields.io/github/contributors/omar-briqa-tfg/OSTIA.svg?style=flat
+[forks-url]: https://github.com/omar-briqa-tfg/OSTIA/network/members
+[forks-shield]: https://img.shields.io/github/forks/omar-briqa-tfg/OSTIA.svg?style=flat
+[stars-url]: https://github.com/omar-briqa-tfg/OSTIA/stargazers
+[stars-shield]: https://img.shields.io/github/stars/omar-briqa-tfg/OSTIA.svg?style=flat
+[license-url]: https://github.com/omar-briqa-tfg/OSTIA/blob/master/LICENSE
+[license-shield]: https://img.shields.io/github/license/omar-briqa-tfg/OSTIA.svg?style=flat
+[linkedin-url]: https://www.linkedin.com/in/omar-briqa/
+[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=flat&logo=linkedin&colorB=555
