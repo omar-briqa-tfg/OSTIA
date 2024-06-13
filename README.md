@@ -44,7 +44,9 @@ Check thesis report ->  [PDF](https://github.com/OBriqa/TFG)
 
 ## Summary
 
+<div style="text-align: justify;">
 In the current context of data science, everything related to data is highly valuable. Going over this information, analyzing, decomposing, and extracting everything can provide valuable insights. In our case, we have been given access to the logs of the UPCommons server, the principal repository of digital content resources for UPC.
+</div>
 
 The logs are the access register, the footprint of every user of the platform. Every exam, documentation, papers, videos, etc accessed is being registered. Our objective is to gather all these details, and somehow convert it into valuable information.
 
