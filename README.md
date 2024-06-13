@@ -82,8 +82,9 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 ## Contact
 
-[![LinkedIn][linkedin-shield]][linkedin-url] <br>
-[![e-mail][email-shield]][email-url]
+[![LinkedIn][linkedin-shield]][linkedin-url]
+[![e-mail][email-shield]][email-url] <br>
+<b>Omar Briqa</b>
 
 [contributors-url]: https://github.com/omar-briqa-tfg/OSTIA/graphs/contributors
 [contributors-shield]: https://img.shields.io/github/contributors/omar-briqa-tfg/OSTIA.svg?style=flat
