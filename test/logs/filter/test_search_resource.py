@@ -9,10 +9,6 @@ def test_search_resource_with_empty_resource():
     assert not SearchResource.filter(resource)
 
 
-@patch.object(
-    ["search?"],
-    "src.logs.filter.search_resource.SEARCH_KEYS",
-)
 @pytest.mark.parametrize(
     "resource",
     [
