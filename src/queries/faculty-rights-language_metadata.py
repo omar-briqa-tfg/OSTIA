@@ -85,44 +85,83 @@ def push_entry_influxdb(handle, rights, language, time):
 
     influxDbClientWrite.write(record=data, write_precision='ns', org=influxdb_org, bucket=influxdb_bucket)
 
-FACULTY_KEYWORD = "vilanova"
-for day in range(2, 32):
+def analysis():
+
+    FACULTY_KEYWORD = "vilanova"
+    for day in range(2, 3):
+
+        query = f"""
+        from(bucket: "upcommons")
+        |> range(start: 2023-12-{day-1:02}T07:00:00Z, stop: 2023-12-{day:02}T00:00:05Z)
+        |> filter(fn: (r) => r["_measurement"] == "tfg")
+        |> filter(fn: (r) => r["_field"] == "recurs")
+        |> keep(columns: ["_value", "_time"])
+        """
+        print(f"2023-12-{day-1:02}")
+
+        results = influxDbClientRead.query(query=query, org=influxdb_org)
+
+        for result in results:
+            for record in result.records:
+                ids = record.get_value()
+                time = record.get_time()
+
+                values = ast.literal_eval(ids) if '[' in ids else [ids]
+                for handle in values:
+
+                    mongo_query = { 'id': handle }
+                    resource = mongoDbCollection.find_one(mongo_query)
+
+                    if resource:
+                        metadata = resource.get('metadata', {})
+                        faculties = metadata.get('dc-audience-mediator')
+
+                        if faculties:
+                            faculties = [faculties] if isinstance(faculties, str) else faculties
+                            for faculty in faculties:
+                                if FACULTY_KEYWORD in faculty.lower():
+                                    rights = get_metadata_rights_value(metadata)
+                                    language = get_metadata_language_value(metadata)
+
+                                    push_entry_influxdb(handle, rights, language, time)
+
+
+def check_type_resource_in_restricted_upc():
 
     query = f"""
-    from(bucket: "upcommons")
-    |> range(start: 2023-12-{day-1:02}T00:00:00Z, stop: 2023-12-{day:02}T00:00:05Z)
-    |> filter(fn: (r) => r["_measurement"] == "tfg")
-    |> filter(fn: (r) => r["_field"] == "recurs")
-    |> keep(columns: ["_value", "_time"])
-    """
-    print(f"2023-12-{day-1:02}")
+        from(bucket: "upcommons")
+        |> range(start: 2023-12-01T00:00:00Z, stop: 2023-12-02T00:00:00Z)
+        |> filter(fn: (r) => r["_measurement"] == "epsevg-rights")
+        |> filter(fn: (r) => r["_field"] == "recurs")
+        |> filter(fn: (r) => r["rights"] == "Restricted access to the UPC academic community")
+        |> keep(columns: ["_value"])
+        """
 
     results = influxDbClientRead.query(query=query, org=influxdb_org)
 
+    resourceTypeResult = {}
     for result in results:
         for record in result.records:
-            ids = record.get_value()
-            time = record.get_time()
+            handle = record.get_value()
 
-            values = ast.literal_eval(ids) if '[' in ids else [ids]
-            for handle in values:
+            mongo_query = { 'id': handle }
+            resource = mongoDbCollection.find_one(mongo_query)
 
-                mongo_query = { 'id': handle }
-                resource = mongoDbCollection.find_one(mongo_query)
+            if resource:
+                metadata = resource.get('metadata', {})
 
-                if resource:
-                    metadata = resource.get('metadata', {})
-                    faculties = metadata.get('dc-audience-mediator')
+                for key in metadata:
+                    if "dc-type" in key:
+                        resourceType = metadata.get(key)
 
-                    if faculties:
-                        faculties = [faculties] if isinstance(faculties, str) else faculties
-                        for faculty in faculties:
-                            if FACULTY_KEYWORD in faculty.lower():
-                                rights = get_metadata_rights_value(metadata)
-                                language = get_metadata_language_value(metadata)
+                print(handle, resourceType)
 
-                                push_entry_influxdb(handle, rights, language, time)
+                if resourceType not in resourceTypeResult:
+                    resourceTypeResult[resourceType] = 1
+                else:
+                    resourceTypeResult[resourceType] = resourceTypeResult[resourceType] + 1
 
+    print(resourceTypeResult)
 
-
+check_type_resource_in_restricted_upc()
 mongoDbClient.close()
