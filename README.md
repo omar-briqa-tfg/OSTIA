@@ -8,7 +8,7 @@
 
 ## Thesis
 
-Final Degree Project [ca] report will be available [here](https://github.com/omar-briqa-tfg/OSTIA) soon ...
+Final Degree Project [ca]: https://upcommons.upc.edu/handle/2117/411792
 
 ## Project Structure
 
